@@ -5,4 +5,4 @@ set(SOURCE_FILES main.cpp)
 
 add_executable(flockingbird ${SOURCE_FILES})
 
-install(TARGETS flockingbird DESTINATION ${DIVISIBLE_INSTALL_BUILD_DIR})
+install(TARGETS flockingbird DESTINATION ${FLOCKINGBIRD_INSTALL_BUILD_DIR})
