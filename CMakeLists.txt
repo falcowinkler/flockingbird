@@ -11,6 +11,9 @@ set(FLOCKINGBIRD_INSTALL_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 set(FLOCKINGBIRD_INSTALL_BUILD_DIR ${PROJECT_SOURCE_DIR}/build)
 
 add_subdirectory(src)
+
+# Tests
+enable_testing()
 add_subdirectory(tests)
 
 # Add googletest (refer to https://github.com/google/googletest/blob/master/googletest/README.md)

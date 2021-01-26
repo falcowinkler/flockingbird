@@ -152,4 +152,3 @@ SpaceBeforeParens: ControlStatements
 JavaScriptWrapImports: true
 JavaScriptQuotes: Single
 DisableFormat:   false
-...

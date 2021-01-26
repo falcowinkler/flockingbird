@@ -1,9 +1,6 @@
-include "gtest/gtest.h"
+#include "gtest/gtest.h"
 
 using namespace std;
-
-
-#define VI vector<long long>
 
 class DividerTest : public ::testing::Test {
 
