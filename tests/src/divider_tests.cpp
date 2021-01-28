@@ -1,4 +1,5 @@
 #include "gtest/gtest.h"
+#include "flockingbird.h"
 
 using namespace std;
 
@@ -15,5 +16,6 @@ protected:
 };
 
 TEST_F(DividerTest, 5_DivideBy_2) {
-  EXPECT_EQ(1, 1);
+  FlockSimulation::Flock flock = FlockSimulation::Flock();
+  EXPECT_EQ(flock.do_something(), 42);
 }

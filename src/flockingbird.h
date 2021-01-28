@@ -1,6 +1,8 @@
+#pragma once
+
 namespace FlockSimulation {
 class Flock {
 public:
-    void do_something();
+  int do_something();
 };
 }  // namespace FlockSimulation
