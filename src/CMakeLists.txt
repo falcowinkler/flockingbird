@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.2)
-project(flockingbird)
+project(flockingbird_demo)
 
 set(SOURCE_FILES main.cpp)
 
-add_executable(flockingbird ${SOURCE_FILES})
+add_executable(flockingbird_demo ${SOURCE_FILES})
 
-install(TARGETS flockingbird DESTINATION ${FLOCKINGBIRD_INSTALL_BUILD_DIR})
+install(TARGETS flockingbird_demo DESTINATION ${FLOCKINGBIRD_INSTALL_BUILD_DIR})

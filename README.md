@@ -17,10 +17,9 @@ cd build
 cmake ..
 make && make install
 ```
-
-### test (after build)
+### build and test
 ```bash
-./build/flockingbird_tests
+./test.sh
 ```
 
 ### run test simulations
