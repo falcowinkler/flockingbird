@@ -22,11 +22,6 @@ make && make install
 ./test.sh
 ```
 
-### run test simulations
-```bash
-./build/flockingbird
-```
-
 ### emacs integration
 
 make sure that compile_commands is linked to the root

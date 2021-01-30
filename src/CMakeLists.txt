@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.2)
 
-set(SOURCE_FILES flockingbird.cpp)
+set(SOURCE_FILES ./)
 
 add_library(flockingbird ${SOURCE_FILES})
 

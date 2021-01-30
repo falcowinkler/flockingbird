@@ -5,13 +5,15 @@ project(flockingbird
     LANGUAGES C CXX
     DESCRIPTION "Implementations of flocking simulation algorithms.")
 
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
 set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR})
 
 set(FLOCKINGBIRD_INSTALL_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 set(FLOCKINGBIRD_INSTALL_BUILD_DIR ${PROJECT_SOURCE_DIR}/build)
 
 add_subdirectory(src)
-
 
 # Tests
 enable_testing()
