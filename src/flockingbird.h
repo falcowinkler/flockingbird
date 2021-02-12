@@ -1,4 +1,5 @@
 #pragma once
+#include "nearest_neighbors/visible_proximity.h"
 
 namespace FlockSimulation {
 class Flock {
