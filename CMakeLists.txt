@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 3.2)
 
+project(flockingbird
+  VERSION 0.0.1
+  LANGUAGES C CXX
+  DESCRIPTION "Implementations of flocking simulation algorithms.")
+
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
