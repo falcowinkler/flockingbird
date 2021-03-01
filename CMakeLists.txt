@@ -13,6 +13,14 @@ set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR})
 set(FLOCKINGBIRD_INSTALL_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 set(FLOCKINGBIRD_INSTALL_BUILD_DIR ${PROJECT_SOURCE_DIR}/build)
 
+
+# TODO if this is really needed, can we recursively inclued all headers?
+set(FLOCKINGBIRD_HEADERS_DIR ${PROJECT_SOURCE_DIR}/src)
+
+# TODO clarify, need this for the tests to work.
+# even though i created a interface library?
+include_directories(${FLOCKINGBIRD_HEADERS_DIR})
+
 add_subdirectory(src)
 
 # Tests

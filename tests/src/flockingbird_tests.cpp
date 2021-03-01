@@ -16,6 +16,5 @@ protected:
 };
 
 TEST_F(DividerTest, 5_DivideBy_2) {
-  FlockSimulation::Flock flock = FlockSimulation::Flock();
-  EXPECT_EQ(flock.do_something(), 42);
+  // TODO tests for umbrella header?
 }

@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.2)
 project(flockingbird_tests)
 
-set(SOURCE_FILES main.cpp src)
+# TODO: Can we recursively add all tests?
+set(SOURCE_FILES main.cpp src/flockingbird_tests.cpp src/nearest_neighbors/nanoflann_exploratory_tests.cpp)
 
 add_executable(flockingbird_tests ${SOURCE_FILES})
 
