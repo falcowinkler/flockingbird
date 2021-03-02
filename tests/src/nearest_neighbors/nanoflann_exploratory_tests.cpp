@@ -8,37 +8,37 @@ using namespace FlockSimulation;
 class NanoflannTest: public ::testing::Test {
 
 protected:
-    virtual void SetUp(){};
+    NanoflannTest() {
+        flock.boids.resize(2);
 
-    virtual void TearDown(){};
+        Point point1;
+        point1.x = 1;
+        point1.y = 2;
+
+        Boid boid1;
+        boid1.bearing  = 0.1;
+        boid1.position = point1;
+
+        Point point2;
+        point2.x = 1;
+        point2.y = 2;
+
+        Boid boid2;
+        boid2.bearing  = 0.1;
+        boid2.position = point2;
+
+        flock.boids[0] = boid1;
+        flock.boids[1] = boid2;
+    };
+
+    virtual void TearDown(){
+    };
+
+    Flock flock;
 };
 
 TEST_F(NanoflannTest, FindsNearestNeighbors) {
-
-  Flock flock;
-  flock.boids.resize(2);
-
-  Point point1;
-  point1.x = 1;
-  point1.y = 2;
-
-  Boid boid1;
-  boid1.bearing  = 0.1;
-  boid1.position = point1;
-
-  Point point2;
-  point2.x = 1;
-  point2.y = 2;
-
-  Boid boid2;
-  boid2.bearing  = 0.1;
-  boid2.position = point2;
-
-  flock.boids[0] = boid1;
-  flock.boids[1] = boid2;
-
   const int dim = 2;
-
   // construct a kd-tree index:
   typedef KDTreeSingleIndexAdaptor<L1_Adaptor<double, Flock>,
                                    Flock,
