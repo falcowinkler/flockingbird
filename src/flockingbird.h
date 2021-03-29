@@ -9,7 +9,7 @@ public:
 };
 
 
-struct Boid {
+class Boid {
 public:
   Point position;
   double bearing;
