@@ -17,7 +17,12 @@ public:
 
 class Flock {
 public:
+    Flock() {
+        std::vector<Boid> emptyBoids;
+        boids = emptyBoids;
+    }
     Flock(int numBoids) {
+        // TODO: random init
       std::vector<Boid> emptyBoids;
       boids = emptyBoids;
     }
