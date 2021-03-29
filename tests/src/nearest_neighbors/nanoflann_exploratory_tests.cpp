@@ -6,9 +6,10 @@ using namespace std;
 using namespace FlockSimulation;
 
 class NanoflannTest: public ::testing::Test {
+public:
 
 protected:
-    NanoflannTest() {
+  NanoflannTest() : flock(Flock(0)) {
         flock.boids.resize(2);
 
         Point point1;
@@ -31,10 +32,9 @@ protected:
         flock.boids[1] = boid2;
     };
 
+    Flock        flock;
     virtual void TearDown(){
     };
-
-    Flock flock;
 };
 
 TEST_F(NanoflannTest, FindsNearestNeighbors) {
