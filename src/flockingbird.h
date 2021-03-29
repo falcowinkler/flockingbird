@@ -3,17 +3,20 @@
 
 namespace FlockSimulation {
 
-struct Point {
+class Point {
+public:
   double x, y;
 };
 
 
 struct Boid {
+public:
   Point position;
   double bearing;
 };
 
-struct Flock {
+class Flock {
+public:
   std::vector<Boid> boids;
 
   typedef Flock Derived;
