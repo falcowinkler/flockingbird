@@ -1,6 +1,6 @@
 #pragma once
 #include "nearest_neighbors/visible_proximity.h"
-
+#include "utility/random_numbers.h"
 namespace FlockSimulation {
 
 class Point {
@@ -22,8 +22,14 @@ public:
         boids = emptyBoids;
     }
     Flock(int numBoids) {
-        // TODO: random init
       std::vector<Boid> emptyBoids;
+      for (int i = 0; i < numBoids; i++) {
+        Boid randomBoid;
+        randomBoid.bearing    = randomInBounds(0, 360);
+        randomBoid.position.x = randomInBounds(-10, 10);
+        randomBoid.position.y = randomInBounds(-10, 10);
+        emptyBoids.push_back(randomBoid);
+      }
       boids = emptyBoids;
     }
 

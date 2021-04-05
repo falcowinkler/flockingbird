@@ -3,7 +3,7 @@
 
 using namespace std;
 
-class DividerTest : public ::testing::Test {
+class FlockingbirdTests : public ::testing::Test {
 
 protected:
 
@@ -15,6 +15,16 @@ protected:
 
 };
 
-TEST_F(DividerTest, 5_DivideBy_2) {
-  // TODO tests for umbrella header?
+TEST_F(FlockingbirdTests, RandomInit) {
+  FlockSimulation::Flock flock(10);
+  EXPECT_EQ(flock.boids.size(), 10);
+  for (int i = 0; i < 10; i++) {
+    FlockSimulation::Boid boid = flock.boids[i];
+    EXPECT_GE(boid.bearing, 0);
+    EXPECT_LE(boid.bearing, 360);
+    EXPECT_GE(boid.position.x, -10);
+    EXPECT_LE(boid.position.x, 10);
+    EXPECT_GE(boid.position.y, -10);
+    EXPECT_LE(boid.position.y, 10);
+  }
 }
