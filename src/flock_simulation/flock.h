@@ -6,14 +6,26 @@ namespace FlockSimulation {
 
 class Point {
 public:
+  Point(){}
+  Point(double xCoord, double yCoord): x(xCoord), y(yCoord) {
+  }
   double x, y;
 };
 
 
 class Boid {
 public:
+  Boid() {}
+  Boid(Point positionIn, double bearingIn, double velocityIn) :
+    position(positionIn),
+    bearing(bearingIn),
+    velocity(velocityIn) {
+  }
   Point position;
+  // Bearings in degrees (0-360, 0 is facing north)
   double bearing;
+  // Velocity in units / s;
+  double velocity;
 };
 
 class Flock {
@@ -23,15 +35,14 @@ public:
         boids = emptyBoids;
     }
       Flock(int numBoids, int maxX, int maxY) {
-      std::vector<Boid> emptyBoids;
+      std::vector<Boid> result;
       for (int i = 0; i < numBoids; i++) {
-        Boid randomBoid;
-        randomBoid.bearing    = randomInBounds(0, 360);
-        randomBoid.position.x = randomInBounds(0, maxX);
-        randomBoid.position.y = randomInBounds(0, maxY);
-        emptyBoids.push_back(randomBoid);
+        Boid randomBoid(Point(randomInBounds(0, maxX), randomInBounds(0, maxY)),
+                        randomInBounds(0, 360),
+                        randomInBounds(0, 360));
+        result.push_back(randomBoid);
       }
-      boids = emptyBoids;
+      boids = result;
     }
 
     std::vector<Boid> boids;

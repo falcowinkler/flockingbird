@@ -21,29 +21,14 @@ protected:
   NanoflannTest() : flock(Flock()),
                     kdTree(dim, flock, KDTreeSingleIndexAdaptorParams(maxLeaf)) {
         flock.boids.resize(3);
-        Point point1;
-        point1.x = 1;
-        point1.y = 2;
+        Point point1 = Point(1, 2);
+        Boid boid1 = Boid(point1, 0.1, 0);
 
-        Boid boid1;
-        boid1.bearing  = 0.1;
-        boid1.position = point1;
+        Point point2 = Point(1, 2);
+        Boid  boid2  = Boid(point2, 0.1, 0);
 
-        Point point2;
-        point2.x = 1;
-        point2.y = 2;
-
-        Boid boid2;
-        boid2.bearing  = 0.1;
-        boid2.position = point2;
-
-        Point point3;
-        point3.x = 5;
-        point3.y = 4;
-
-        Boid boid3;
-        boid3.bearing  = 360;
-        boid3.position = point3;
+        Point point3 = Point(5, 4);
+        Boid  boid3  = Boid(point3, 360, 0.5);
 
         flock.boids[0] = boid1;
         flock.boids[1] = boid2;
