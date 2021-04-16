@@ -21,13 +21,13 @@ public:
         std::vector<Boid> emptyBoids;
         boids = emptyBoids;
     }
-    Flock(int numBoids) {
+      Flock(int numBoids, int maxX, int maxY) {
       std::vector<Boid> emptyBoids;
       for (int i = 0; i < numBoids; i++) {
         Boid randomBoid;
         randomBoid.bearing    = randomInBounds(0, 360);
-        randomBoid.position.x = randomInBounds(-10, 10);
-        randomBoid.position.y = randomInBounds(-10, 10);
+        randomBoid.position.x = randomInBounds(0, maxX);
+        randomBoid.position.y = randomInBounds(0, maxY);
         emptyBoids.push_back(randomBoid);
       }
       boids = emptyBoids;

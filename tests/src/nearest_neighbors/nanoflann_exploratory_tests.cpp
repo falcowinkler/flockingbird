@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "../src/flockingbird.h"
-#define GTEST_COUT std::cerr << "[          ] [ INFO ]"
+
+
 using namespace nanoflann;
 using namespace std;
 using namespace FlockSimulation;
@@ -9,7 +10,7 @@ class NanoflannTest: public ::testing::Test {
 public:
 
 protected:
-  NanoflannTest() : flock(Flock(0)) {
+  NanoflannTest() : flock(Flock(0, 10, 10)) {
         flock.boids.resize(2);
 
         Point point1;
@@ -37,14 +38,18 @@ protected:
     };
 };
 
+
 TEST_F(NanoflannTest, FindsNearestNeighbors) {
   const int dim = 2;
+  const int maxLeaf = 10;
+
   // construct a kd-tree index:
   typedef KDTreeSingleIndexAdaptor<L1_Adaptor<double, Flock>,
                                    Flock,
-                                   dim /* dim */
+                                   dim
                                    > my_kd_tree_t;
-  my_kd_tree_t index(dim /*dim*/, flock, KDTreeSingleIndexAdaptorParams(10 /* max leaf */) );
+
+  my_kd_tree_t index(dim, flock, KDTreeSingleIndexAdaptorParams(maxLeaf));
   index.buildIndex();
 
   nanoflann::SearchParams params;
@@ -54,6 +59,5 @@ TEST_F(NanoflannTest, FindsNearestNeighbors) {
 
   const double query_pt[2] = {1, 2.09};
   const size_t nMatches = index.radiusSearch(&query_pt[0], search_radius, ret_matches, params);
-  GTEST_COUT << "Hello World" << std::endl;
   EXPECT_EQ(nMatches, 2) << "Found wrong neighbors: " << nMatches;
 }
