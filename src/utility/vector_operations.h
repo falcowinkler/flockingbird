@@ -9,4 +9,12 @@ namespace VectorOperations {
     }
     return result;
   }
+
+  std::vector<double> multiplyScalar(std::vector<double> a, double scalar) {
+    std::vector<double> result;
+    for (auto it = a.begin(); it != a.end(); it++) {
+        result.push_back(*it * scalar);
+    }
+    return result;
+  }
 }
