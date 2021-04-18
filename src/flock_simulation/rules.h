@@ -5,18 +5,18 @@
 using namespace FlockSimulation;
 
 class Rules {
-  static Boid collisionAvoidance(Boid boidToUpdate, std::vector<Boid> proximity) {
+  static std::vector<double> seperation(Boid boidToUpdate, std::vector<Boid> proximity) {
     proximity.size();
-    return boidToUpdate;
+    return boidToUpdate.velocity;
   }
 
-  static Boid velocityMatching(Boid boidToUpdate, std::vector<Boid> proximity) {
-    proximity.size();
-    return boidToUpdate;
+  static std::vector<double> alignment(Boid boidToUpdate, std::vector<Boid> proximity) {
+      proximity.size();
+      return boidToUpdate.velocity;
   }
 
-  static Boid flockCentering(Boid boidToUpdate, std::vector<Boid> proximity) {
-    proximity.size();
-    return boidToUpdate;
+  static std::vector<double> cohesion(Boid boidToUpdate, std::vector<Boid> proximity) {
+      proximity.size();
+      return boidToUpdate.velocity;
   }
 };
