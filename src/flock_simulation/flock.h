@@ -1,4 +1,5 @@
 #include "utility/random_numbers.h"
+#include <vector>
 /*
  * Datatype definitions for Points, boids and flocks.
  */
@@ -16,16 +17,12 @@ public:
 class Boid {
 public:
   Boid() {}
-  Boid(Point positionIn, double bearingIn, double velocityIn) :
+  Boid(Point positionIn, std::vector<double> velocity) :
     position(positionIn),
-    bearing(bearingIn),
-    velocity(velocityIn) {
+    velocity(velocity) {
   }
   Point position;
-  // Bearings in degrees (0-360, 0 is facing north)
-  double bearing;
-  // Velocity in units / s;
-  double velocity;
+  std::vector<double> velocity;
 };
 
 class Flock {
@@ -38,8 +35,8 @@ public:
       std::vector<Boid> result;
       for (int i = 0; i < numBoids; i++) {
         Boid randomBoid(Point(randomInBounds(0, maxX), randomInBounds(0, maxY)),
-                        randomInBounds(0, 360),
-                        randomInBounds(0, 360));
+                        std::vector<double> {randomInBounds(0, 1), randomInBounds(0, 1)}
+                        );
         result.push_back(randomBoid);
       }
       boids = result;

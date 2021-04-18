@@ -12,14 +12,16 @@ protected:
         : flock(Flock(0, 10, 10)) {
         flock.boids.resize(3);
 
+        vector<double> dummyDirection = vector<double>{1.0, 1.0};
+
         Point point1 = Point(1.01, 2.12);
-        Boid  boid1  = Boid(point1, 0.1, 0);
+        Boid  boid1  = Boid(point1, dummyDirection);
 
         Point point2 = Point(1.5, 2.5);
-        Boid  boid2  = Boid(point2, 0.254, 0);
+        Boid  boid2  = Boid(point2, dummyDirection);
 
         Point point3 = Point(5, 4);
-        Boid  boid3  = Boid(point3, 360, 0.5);
+        Boid  boid3  = Boid(point3, dummyDirection);
 
         flock.boids[0] = boid1;
         flock.boids[1] = boid2;
@@ -38,11 +40,9 @@ TEST_F(VisibleProximityTest, FindNearestNeighbors) {
   Boid firstBoid = visibleBoids.front();
   Boid secondBoid = visibleBoids.back();
 
-  EXPECT_EQ(firstBoid.bearing, 0.1);
   EXPECT_EQ(firstBoid.position.x, 1.01);
   EXPECT_EQ(firstBoid.position.y, 2.12);
 
-  EXPECT_EQ(secondBoid.bearing, 0.254);
   EXPECT_EQ(secondBoid.position.x, 1.5);
   EXPECT_EQ(secondBoid.position.y, 2.5);
 
