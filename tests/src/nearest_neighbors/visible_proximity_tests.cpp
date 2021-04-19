@@ -10,22 +10,16 @@ public:
 protected:
     VisibleProximityTest()
         : flock(Flock(0, 10, 10)) {
-        flock.boids.resize(3);
 
-        vector<double> dummyDirection = vector<double>{1.0, 1.0};
+        Vector2D dummyDirection = Vector2D(1.0, 1.0);
 
-        Point point1 = Point(1.01, 2.12);
-        Boid  boid1  = Boid(point1, dummyDirection);
+        Boid  boid1  = Boid(Vector2D(1.01, 2.12), dummyDirection);
+        Boid  boid2  = Boid(Vector2D(1.5, 2.5), dummyDirection);
+        Boid  boid3  = Boid(Vector2D(5, 4), dummyDirection);
 
-        Point point2 = Point(1.5, 2.5);
-        Boid  boid2  = Boid(point2, dummyDirection);
-
-        Point point3 = Point(5, 4);
-        Boid  boid3  = Boid(point3, dummyDirection);
-
-        flock.boids[0] = boid1;
-        flock.boids[1] = boid2;
-        flock.boids[2] = boid3;
+        flock.boids.push_back(boid1);
+        flock.boids.push_back(boid2);
+        flock.boids.push_back(boid3);
     };
 
     Flock        flock;

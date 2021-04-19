@@ -31,16 +31,16 @@ class VisibleProximity {
       const double                           search_radius = static_cast<double>(visionRange);
       std::vector<std::pair<size_t, double>> ret_matches;
 
-      Point boidPosition = flock.boids[index].position;
+      Vector2D boidPosition = flock.boids[index].position;
 
       const double query_pt[2] = {boidPosition.x, boidPosition.y};
       const size_t nMatches = kdTree.radiusSearch(&query_pt[0], search_radius, ret_matches, params);
 
       // Maybe block vision in the backwards direction of the bird?
 
-      std::vector<Boid> result(nMatches);
+      std::vector<Boid> result;
       for (int i = 0; i < nMatches; i++) {
-        result[i] = flock.boids[ret_matches[i].first];
+        result.push_back(flock.boids[ret_matches[i].first]);
       }
       return result;
   }

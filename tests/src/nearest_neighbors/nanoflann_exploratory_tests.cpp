@@ -20,22 +20,18 @@ public:
 protected:
   NanoflannTest() : flock(Flock()),
                     kdTree(dim, flock, KDTreeSingleIndexAdaptorParams(maxLeaf)) {
-        flock.boids.resize(3);
         // current direction vector not relevant for proximity tests
         vector<double> dummyDirection = vector<double> {1.0, 1.0};
 
-        Point point1 = Point(1, 2);
-        Boid  boid1  = Boid(point1, dummyDirection);
+        Boid  boid1  = Boid(Vector2D(1, 2), Vector2D(1, 1));
 
-        Point point2 = Point(1, 2);
-        Boid  boid2  = Boid(point2, dummyDirection);
+        Boid  boid2  = Boid(Vector2D(1, 2), Vector2D(1, 1));
 
-        Point point3 = Point(5, 4);
-        Boid  boid3  = Boid(point3, dummyDirection);
+        Boid  boid3  = Boid(Vector2D(5, 4), Vector2D(1, 1));
 
-        flock.boids[0] = boid1;
-        flock.boids[1] = boid2;
-        flock.boids[2] = boid3;
+        flock.boids.push_back(boid1);
+        flock.boids.push_back(boid2);
+        flock.boids.push_back(boid3);
 
         const int dim = 2;
         const int maxLeaf = 10;
