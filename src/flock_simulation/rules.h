@@ -15,9 +15,16 @@ namespace Rules {
     return c;
   }
 
+  // Boids try to match velocity with near boids.
   Vector2D alignment(Boid boidToUpdate, std::vector<Boid> proximity) {
-      proximity.size();
-      return boidToUpdate.velocity;
+    Vector2D aggregatedVelocity(0, 0);
+    for (auto it = proximity.begin(); it != proximity.end(); it++) {
+      aggregatedVelocity = vecSum(aggregatedVelocity, it->velocity);
+    }
+    Vector2D averageVelocity = vecMulScalar(aggregatedVelocity, 1.0/proximity.size());
+    Vector2D diff = vecDiff(averageVelocity, boidToUpdate.velocity);
+    const double scalingFactor = 1.0/8;
+    return vecMulScalar(diff, scalingFactor);
   }
 
   // Boids try to fly towards the centre of mass of neighbouring boids.
@@ -27,8 +34,7 @@ namespace Rules {
       for (auto it = proximity.begin(); it != proximity.end(); it++) {
         aggregatedPosition = vecSum(aggregatedPosition, it->position);
       }
-      const int N = proximity.size();
-      const Vector2D averagedPosition = vecMulScalar(aggregatedPosition, 1.0/N);
+      const Vector2D averagedPosition = vecMulScalar(aggregatedPosition, 1.0/proximity.size());
       const Vector2D diff = vecDiff(averagedPosition, boidToUpdate.position);
       const double scalingFactor = 1.0 / 100; // One percent
       return vecMulScalar(diff, scalingFactor);
