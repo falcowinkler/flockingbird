@@ -18,3 +18,9 @@ TEST_F(VectorOperationsTest, VectorSum) {
   EXPECT_EQ(result.x, 4);
   EXPECT_EQ(result.y, 6);
 }
+
+TEST_F(VectorOperationsTest, VectorMultiplyScalar) {
+  Vector2D result = VectorOperations::vecMulScalar(Vector2D(3, 4), 0.5);
+  EXPECT_EQ(result.x, 1.5);
+  EXPECT_EQ(result.y, 2);
+}

@@ -22,7 +22,7 @@ protected:
     virtual void TearDown(){};
 };
 
-TEST_F(RulesTest, TestAlingsVelocityToCenterOfMassOfTheNeighbors) {
+TEST_F(RulesTest, TestAlingsVelocityToCenterOfMassOfTheNeighbors1) {
     Vector2D velocityCorrection = Rules::cohesion(boidToUpdate, proximity);
     // Average position of proximity:
     // (1 + 2 + 3) / 3 = 2
@@ -32,3 +32,16 @@ TEST_F(RulesTest, TestAlingsVelocityToCenterOfMassOfTheNeighbors) {
     ASSERT_DOUBLE_EQ(velocityCorrection.x, 2.0/100);
     ASSERT_DOUBLE_EQ(velocityCorrection.y, 3.0/100);
 }
+
+TEST_F(RulesTest, TestAlingsVelocityToCenterOfMassOfTheNeighbors2) {
+  Boid newBoid = Boid(Vector2D(2, 4), Vector2D(0, 0));
+  Vector2D velocityCorrection = Rules::cohesion(newBoid, proximity);
+  // Average position of proximity:
+  // (1 + 2 + 3) / 3 = 2
+  // (2 + 3 + 4) / 3 = 3
+  // pcj = (2, 3)
+  // correction vector: (pcj - boidToUpdate.pos) / 100 = (0/-1) / 100 = (0.0/100, -1/100)
+  ASSERT_DOUBLE_EQ(velocityCorrection.x, 0);
+  ASSERT_DOUBLE_EQ(velocityCorrection.y, -1.0/100);
+}
+
