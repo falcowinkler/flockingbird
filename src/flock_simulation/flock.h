@@ -1,5 +1,4 @@
 #include "utility/random_numbers.h"
-#include <vector>
 
 /*
  * Datatype definitions for Points, boids and flocks.

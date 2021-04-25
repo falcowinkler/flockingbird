@@ -24,4 +24,11 @@ protected:
 
 TEST_F(RulesTest, TestAlingsVelocityToCenterOfMassOfTheNeighbors) {
     Vector2D velocityCorrection = Rules::cohesion(boidToUpdate, proximity);
+    // Average position of proximity:
+    // (1 + 2 + 3) / 3 = 2
+    // (2 + 3 + 4) / 3 = 3
+    // pcj = (2, 3)
+    // correction vector: (pcj - boidToUpdate.pos) / 100 = (2/3) / 100 = (2.0/100, 3.0/100)
+    ASSERT_DOUBLE_EQ(velocityCorrection.x, 2.0/100);
+    ASSERT_DOUBLE_EQ(velocityCorrection.y, 3.0/100);
 }
