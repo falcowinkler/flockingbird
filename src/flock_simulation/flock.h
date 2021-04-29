@@ -1,5 +1,5 @@
 #include "utility/random_numbers.h"
-
+#pragma once
 /*
  * Datatype definitions for Points, boids and flocks.
  */
@@ -18,7 +18,7 @@ struct Vector2D {
 };
 
 inline std::ostream& operator<<(std::ostream& outputStream, const Vector2D& p) {
-  outputStream << "[" << p.x << ", " << p.y << "]";
+    outputStream << "[" << p.x << ", " << p.y << "]";
     return outputStream;
 }
 
@@ -33,7 +33,7 @@ public:
     Vector2D position;
     Vector2D velocity;
 
-  friend std::ostream& operator<<(std::ostream& outputStream, const Boid& p);
+    friend std::ostream& operator<<(std::ostream& outputStream, const Boid& p);
 };
 
 inline std::ostream& operator<<(std::ostream& outputStream, const Boid& p) {
@@ -43,6 +43,7 @@ inline std::ostream& operator<<(std::ostream& outputStream, const Boid& p) {
 
 class Flock {
 public:
+    // constructors
     Flock(const Flock& other) {
         for (auto it = other.boids.begin(); it != other.boids.end(); it++) {
             boids.push_back(Boid(*it));
@@ -62,7 +63,10 @@ public:
         boids = result;
     }
 
+    // members
     std::vector<Boid> boids;
+
+    // nanoflann API
     inline size_t kdtree_get_point_count() const { return boids.size(); }
 
     inline double kdtree_get_pt(const size_t idx, const size_t dim) const {

@@ -7,7 +7,8 @@ set(SOURCE_FILES
   src/nearest_neighbors/visible_proximity_tests.cpp
   src/flock_simulation/flock_tests.cpp
   src/flock_simulation/rules_tests.cpp
-  src/utility/vector_operations_tests.cpp)
+  src/utility/vector_operations_tests.cpp
+  src/flock_simulation/simulation_test.cpp)
 
 add_executable(flockingbird_tests ${SOURCE_FILES})
 

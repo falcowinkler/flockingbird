@@ -20,14 +20,13 @@ private:
     Flock     flock;
 
 public:
-    VisibleProximity(FlockSimulation::Flock flockToQuery, double boidVisionRange)
+    VisibleProximity(FlockSimulation::Flock flockToQuery)
       : flock(flockToQuery)
-      , kdTree(dim, flockToQuery, KDTreeSingleIndexAdaptorParams(maxLeaf))
-        , visionRange(boidVisionRange) {
+      , kdTree(dim, flockToQuery, KDTreeSingleIndexAdaptorParams(maxLeaf)) {
         kdTree.buildIndex();
     }
 
-    std::vector<Boid> of(int index) {
+     std::vector<Boid> of(int index, double visionRange) {
 
         nanoflann::SearchParams params;
         params.sorted = false;
@@ -51,7 +50,7 @@ public:
                 //  flock.boids[ret_matches[i].first].position)) < 0.1);
                 std::cout << "Distance result: nanoflann says: " << nano << ", i say:" << me
                           << std::endl;
-                std::cout << "searchRadius: " << visionRange << std::endl;
+                //  std::cout << "searchRadius: " << visionRange << std::endl;
                 std::cout << "found: " << flock.boids[ret_matches[i].first].position << " in radius of source: " << boidPosition << ", index: " << ret_matches[i].first << std::endl;
             }
         }

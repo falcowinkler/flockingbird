@@ -33,6 +33,12 @@ TEST_F(RulesTest, TestAlingsVelocityToCenterOfMassOfTheNeighbors1) {
     ASSERT_DOUBLE_EQ(velocityCorrection.y, 3.0 / 100);
 }
 
+TEST_F(RulesTest, TestCohesionNoNeigborsReturnsZeroVector) {
+    Vector2D velocityCorrection = Rules::cohesion(boidToUpdate, std::vector<Boid>());
+    ASSERT_DOUBLE_EQ(velocityCorrection.x, 0);
+    ASSERT_DOUBLE_EQ(velocityCorrection.y, 0);
+}
+
 TEST_F(RulesTest, TestAlingsVelocityToCenterOfMassOfTheNeighbors2) {
     Boid     newBoid            = Boid(Vector2D(2, 4), Vector2D(0, 0));
     Vector2D velocityCorrection = Rules::cohesion(newBoid, proximity);
@@ -57,12 +63,24 @@ TEST_F(RulesTest, TestSeperationRepelsBoids1) {
     ASSERT_DOUBLE_EQ(velocityCorrection.y, 9);
 }
 
+TEST_F(RulesTest, TestSeparationNoNeigborsReturnsZeroVector) {
+    Vector2D velocityCorrection = Rules::seperation(boidToUpdate, std::vector<Boid>());
+    ASSERT_DOUBLE_EQ(velocityCorrection.x, 0);
+    ASSERT_DOUBLE_EQ(velocityCorrection.y, 0);
+}
+
 TEST_F(RulesTest, TestAlignmentAlignsBoidVelocityToNeighborhood) {
     Vector2D velocityCorrection = Rules::alignment(boidToUpdate, proximity);
     /* Average the velocity of other boids, and scale by factor 8
      * (4, 5.5) / 3 = (4/3, 1.8333)
      * ((4/3, 1.8333)-(1, 1)) / 8 = (0.333/8, .833/8)
      */
-    ASSERT_DOUBLE_EQ(velocityCorrection.x, 1.0/3 / 8);
+    ASSERT_DOUBLE_EQ(velocityCorrection.x, 1.0 / 3 / 8);
     ASSERT_DOUBLE_EQ(velocityCorrection.y, 0.833333333333333 / 8);
+}
+
+TEST_F(RulesTest, TestAlignmentNoNeigborsReturnsZeroVector) {
+    Vector2D velocityCorrection = Rules::alignment(boidToUpdate, std::vector<Boid>());
+    ASSERT_DOUBLE_EQ(velocityCorrection.x, 0);
+    ASSERT_DOUBLE_EQ(velocityCorrection.y, 0);
 }
