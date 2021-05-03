@@ -6,7 +6,7 @@ using namespace VectorOperations;
 
 inline Flock step(Flock flock) {
     Flock            result(flock);
-    const double     visionRange       = 15.0;
+    const double     visionRange       = 50.0; // squared euclidean distance
     VisibleProximity visibleProximity(flock);
     std::cout << "number of boids: " << flock.boids.size() << std::endl;
     for (int i = 0; i < flock.boids.size(); i++) {

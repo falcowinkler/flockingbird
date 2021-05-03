@@ -6,8 +6,6 @@
 using namespace nanoflann;
 using namespace FlockSimulation;
 
-inline double L2_Reference(Vector2D a, Vector2D b) { return pow(a.x - b.x, 2) + pow(a.y - b.y, 2); }
-
 const int dim     = 2;
 const int maxLeaf = 10;
 
@@ -17,43 +15,29 @@ class VisibleProximity {
 private:
     double    visionRange;
     Flock     flock;
+  kd_tree_t kdTree;
 
 public:
     VisibleProximity(FlockSimulation::Flock flockToQuery)
-      : flock(flockToQuery) {
+        : flock(flockToQuery)
+        , kdTree(dim, flock, KDTreeSingleIndexAdaptorParams(maxLeaf)) {
+          kdTree.buildIndex();
     }
+    std::vector<Boid> of(int index, double visionRange) {
+        nanoflann::SearchParams params;
+        params.sorted = false;
+        std::vector<std::pair<size_t, double>> ret_matches;
 
-     std::vector<Boid> of(int index, double visionRange) {
+        Vector2D     boidPosition = flock.boids[index].position;
+        const double query_pt[2]  = {boidPosition.x, boidPosition.y};
+        const size_t nMatches     = kdTree.radiusSearch(query_pt, visionRange, ret_matches, params);
 
-         kd_tree_t kdTree(2, flock, KDTreeSingleIndexAdaptorParams(maxLeaf));
-         kdTree.buildIndex();
-
-         nanoflann::SearchParams params;
-         params.sorted = false;
-         std::vector<std::pair<size_t, double>> ret_matches;
-
-         Vector2D     boidPosition = flock.boids[index].position;
-         const double query_pt[2]  = {boidPosition.x, boidPosition.y};
-         const size_t nMatches = kdTree.radiusSearch(query_pt, visionRange, ret_matches, params);
-
-         // TODO: Maybe block vision in the backwards direction of the bird?
-         // TODO: Exclude the boid itself?
-         std::vector<Boid> result;
-         for (int i = 0; i < nMatches; i++) {
-             double nano = ret_matches[i].second;  // Second item of the tuple is the distance
-             double me   = L2_Reference(Vector2D(query_pt[0], query_pt[1]),
-                                      flock.boids[ret_matches[i].first].position);
-             result.push_back(flock.boids[ret_matches[i].first]);
-             if (abs(nano-me) > 0.00001) {  // Should never happen
-                 //  assert(abs(ret_matches[i].second - L2_Reference(flock.boids[index].position,
-                 //  flock.boids[ret_matches[i].first].position)) < 0.1);
-                 std::cout << "Distance result: nanoflann says: " << nano << ", i say:" << me
-                           << std::endl;
-                 //  std::cout << "searchRadius: " << visionRange << std::endl;
-                 std::cout << "found: " << flock.boids[ret_matches[i].first].position
-                           << " in radius of source: " << boidPosition
-                           << ", index: " << ret_matches[i].first << std::endl;
-             }
+        // TODO: Maybe block vision in the backwards direction of the bird?
+        // TODO: Exclude the boid itself?
+        std::vector<Boid> result;
+        for (int i = 0; i < nMatches; i++) {
+            double nano = ret_matches[i].second;  // Second item of the tuple is the distance
+            result.push_back(flock.boids[ret_matches[i].first]);
         }
         return result;
     }

@@ -108,12 +108,10 @@ TEST_F(VisibleProximityTest, FindsNeigborWithVeryNarrowVision) {
 
 /*
  * Random tests
+ *
  */
-/*
-inline double L2_Reference(Vector2D a, Vector2D b) {
-  return sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2));
-}
-*/
+inline double L2_Reference(Vector2D a, Vector2D b) { return pow(a.x - b.x, 2) + pow(a.y - b.y, 2); }
+
 TEST_F(VisibleProximityTest, RandomTests) {
     int N = 1000;
 
