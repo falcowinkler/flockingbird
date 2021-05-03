@@ -68,5 +68,5 @@ TEST_F(NanoflannTest, ExcludesNeighborsIfNotInRadius) {
     const double query_pt[2] = {5.2, 4.1};
     const size_t nMatches = kdTree.radiusSearch(&query_pt[0], search_radius, ret_matches, params);
     EXPECT_EQ(nMatches, 1) << "Found wrong neighbors: " << nMatches;
-    EXPECT_EQ(ret_matches[0].first, 2);
+    EXPECT_EQ(ret_matches[0].first, 2); // finds only boid 3 (index 2)
 }

@@ -48,6 +48,50 @@ TEST_F(VisibleProximityTest, FindNearestNeighborsInCloseProximity) {
     EXPECT_EQ(secondBoid.position.y, 2.5);
 }
 
+TEST_F(VisibleProximityTest, FindsPointsOnEdgeOfSearchRadius) {
+    VisibleProximity  visibleProximity(flock);
+    const double      visionRange  = 0.3845; // ((1.5 - 1.01) ^ 2 + (2.5-2.12) ^ 2 == 0.3845)
+    std::vector<Boid> visibleBoids = visibleProximity.of(/*boid at index*/ 0, visionRange);
+    EXPECT_EQ(visibleBoids.size(), 2);
+
+    Boid firstBoid  = visibleBoids.front();
+    Boid secondBoid = visibleBoids.back();
+
+    EXPECT_EQ(firstBoid.position.x, 1.01);
+    EXPECT_EQ(firstBoid.position.y, 2.12);
+
+    EXPECT_EQ(secondBoid.position.x, 1.5);
+    EXPECT_EQ(secondBoid.position.y, 2.5);
+}
+
+TEST_F(VisibleProximityTest, ExcludesPointsOnEdgeOfSearchRadius) {
+    VisibleProximity  visibleProximity(flock);
+    const double      visionRange  = 0.3844;  // ((1.5 - 1.01) ^ 2 + (2.5-2.12) ^ 2 == 0.3845)
+    std::vector<Boid> visibleBoids = visibleProximity.of(/*boid at index*/ 0, visionRange);
+    EXPECT_EQ(visibleBoids.size(), 1);
+
+    Boid firstBoid  = visibleBoids.front();
+
+    EXPECT_EQ(firstBoid.position.x, 1.01);
+    EXPECT_EQ(firstBoid.position.y, 2.12);
+}
+
+TEST_F(VisibleProximityTest, MultipleQueriesOnBuiltIndex) {
+    VisibleProximity  visibleProximity(flock);
+    const double      visionRange  = 0.3844;  // ((1.5 - 1.01) ^ 2 + (2.5-2.12) ^ 2 == 0.3845)
+
+    visibleProximity.of(/*boid at index*/ 0, visionRange);
+    visibleProximity.of(/*boid at index*/ 0, visionRange);
+    visibleProximity.of(/*boid at index*/ 0, visionRange);
+    std::vector<Boid> visibleBoids = visibleProximity.of(0, visionRange);
+    EXPECT_EQ(visibleBoids.size(), 1);
+
+    Boid firstBoid = visibleBoids.front();
+
+    EXPECT_EQ(firstBoid.position.x, 1.01);
+    EXPECT_EQ(firstBoid.position.y, 2.12);
+}
+
 TEST_F(VisibleProximityTest, FindTheWholeFlockWithASufficientVisionRange) {
     VisibleProximity  visibleProximity(flock);
     const double visionRange = 50;
@@ -71,7 +115,7 @@ inline double L2_Reference(Vector2D a, Vector2D b) {
 }
 */
 TEST_F(VisibleProximityTest, RandomTests) {
-    int N = 1;
+    int N = 1000;
 
     for (int testRun = 0; testRun < N; testRun++) {
         int               numBoids = rand() % 100;
@@ -89,7 +133,7 @@ TEST_F(VisibleProximityTest, RandomTests) {
         for (int i = 0; i < numBoids; i++) {
           std::vector<Boid> visibleBoids = visibleProximity.of(/*boid at index*/ i, visionRange);
           for (auto boidIt = visibleBoids.begin(); boidIt != visibleBoids.end(); boidIt++) {
-            //  EXPECT_LE(L2_Reference(boidIt->position, refFlock.boids[i].position), visionRange);
+             EXPECT_LE(L2_Reference(boidIt->position, refFlock.boids[i].position), visionRange);
           }
         }
     }
