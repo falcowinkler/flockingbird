@@ -58,7 +58,8 @@ TEST_F(SimulationTest, Step) {
     Vector2D newVelocity      = testedBoid.velocity;
     Vector2D newPosition      = testedBoid.position;
     Vector2D expectedVelocity = vecSum(testedBoidOriginal.velocity, expectedCorrection);
-    Vector2D expectedPosition = vecSum(testedBoidOriginal.position, expectedVelocity);
+    Vector2D scaledVelocity = vecMulScalar(expectedVelocity, POSITION_INCREMENT_SCALING_FACTOR);
+    Vector2D expectedPosition = vecSum(testedBoidOriginal.position, scaledVelocity);
 
     double accuracy = 1E-5;
 

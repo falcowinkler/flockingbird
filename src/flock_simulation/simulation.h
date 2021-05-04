@@ -5,6 +5,7 @@ using namespace FlockSimulation;
 using namespace VectorOperations;
 
 const double SPEED_LIMIT = 500;
+const double POSITION_INCREMENT_SCALING_FACTOR = 1.0 / 100;
 
 inline Flock step(Flock flock) {
     Flock            result(flock);
@@ -34,10 +35,12 @@ inline Flock step(Flock flock) {
             = vecSum(boidToUpdate.velocity, vecSum(vecSum(cohesion, seperation), alignment));
         std::cout << "velocity correctionL: " << velocityCorrection << std::endl;
         if (magnitude(velocityCorrection) > SPEED_LIMIT) {
-          velocityCorrection = vecMulScalar(velocityCorrection, SPEED_LIMIT / magnitude(velocityCorrection));
+            velocityCorrection
+                = vecMulScalar(velocityCorrection, SPEED_LIMIT / magnitude(velocityCorrection));
         }
         result.boids[i].velocity = velocityCorrection;
-        result.boids[i].position = vecSum(result.boids[i].position, velocityCorrection);
+        Vector2D scaledVelocity = vecMulScalar(velocityCorrection, POSITION_INCREMENT_SCALING_FACTOR);
+        result.boids[i].position = vecSum(result.boids[i].position, scaledVelocity);
     }
     return result;
 }
