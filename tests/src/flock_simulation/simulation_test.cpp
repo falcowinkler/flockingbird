@@ -11,7 +11,7 @@ class SimulationTest : public ::testing::Test {
 public:
 protected:
     SimulationTest()
-        : testedBoidOriginal(Vector2D(0, 0), Vector2D(1, 0)) {
+        : testedBoidOriginal(Vector2D(0, 0), Vector2D(1.0, 1.0)) {
         Boid boid1 = Boid(Vector2D(1.0, 2), Vector2D(1.0, 1.0));
         Boid boid2 = Boid(Vector2D(2, 3), Vector2D(2, 1.0));
         Boid boid3 = Boid(Vector2D(3, 4), Vector2D(1.0, 3.5));
@@ -31,11 +31,10 @@ protected:
 
 
 TEST_F(SimulationTest, Step) {
-    Vector2D correction1 = Vector2D(2.0 / 100, 3.0 / 100);
-    Vector2D correction2 = Vector2D(6, 9);
-    Vector2D correction3 = Vector2D(1.0 / 3 / 8, 0.833333333333333 / 8);
-
-    Vector2D expectedCorrection = vecSum(vecSum(correction1, correction2), correction3);
+    Vector2D cohesion = Vector2D(2.0 / 100, 3.0 / 100);
+    Vector2D separation = Vector2D(6, 9);
+    Vector2D alignment = Vector2D(1.0 / 3 / 8, 0.833333333333333 / 8);
+    Vector2D expectedCorrection = vecSum(vecSum(alignment, separation), cohesion);
 
     Flock sut;
     sut.boids = proximity;

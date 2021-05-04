@@ -33,11 +33,12 @@ public:
         const size_t nMatches     = kdTree.radiusSearch(query_pt, visionRange, ret_matches, params);
 
         // TODO: Maybe block vision in the backwards direction of the bird?
-        // TODO: Exclude the boid itself?
         std::vector<Boid> result;
         for (int i = 0; i < nMatches; i++) {
-            double nano = ret_matches[i].second;  // Second item of the tuple is the distance
+          double distance = ret_matches[i].second;
+          if (distance > 0) {
             result.push_back(flock.boids[ret_matches[i].first]);
+          }
         }
         return result;
     }

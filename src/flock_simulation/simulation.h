@@ -14,7 +14,6 @@ inline Flock step(Flock flock) {
         std::cout << "boid to update: " << boidToUpdate << std::endl;
 
         // TODO: include boid at index i from result;
-        // TODO: fix proximity? it gives completely nonsensical result in the sample test...
         std::vector<Boid> proximity      = visibleProximity.of(i, visionRange);
         std::cout << "found proximity: " << std::endl;
         for (auto it = proximity.begin(); it < proximity.end(); it++) {
