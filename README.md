@@ -30,3 +30,13 @@ make sure that compile_commands is linked to the root
 ln build/compile_commands.json .
 ```
 
+### Dependencies
+For the demo animation:
+```bash
+brew install cairo
+```
+
+NOTE: i had to 
+```bash
+export LDFLAGS="-L/usr/local/Cellar/cairo/1.16.0_5/lib $LDFLAGS"
+```
