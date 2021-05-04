@@ -14,4 +14,8 @@ namespace VectorOperations {
   inline Vector2D vecMulScalar(Vector2D a, double scalar) {
     return Vector2D(a.x * scalar, a.y * scalar);
   }
+
+  inline double magnitude(Vector2D a) {
+    return sqrt(pow(a.x, 2) + pow(a.y, 2));
+  }
 }

@@ -4,6 +4,8 @@
 using namespace FlockSimulation;
 using namespace VectorOperations;
 
+const double SPEED_LIMIT = 500;
+
 inline Flock step(Flock flock) {
     Flock            result(flock);
     const double     visionRange       = 50.0; // squared euclidean distance
@@ -31,6 +33,9 @@ inline Flock step(Flock flock) {
         Vector2D          velocityCorrection
             = vecSum(boidToUpdate.velocity, vecSum(vecSum(cohesion, seperation), alignment));
         std::cout << "velocity correctionL: " << velocityCorrection << std::endl;
+        if (magnitude(velocityCorrection) > SPEED_LIMIT) {
+          velocityCorrection = vecMulScalar(velocityCorrection, SPEED_LIMIT / magnitude(velocityCorrection));
+        }
         result.boids[i].velocity = velocityCorrection;
         result.boids[i].position = vecSum(result.boids[i].position, velocityCorrection);
     }

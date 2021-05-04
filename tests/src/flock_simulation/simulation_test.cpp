@@ -60,10 +60,22 @@ TEST_F(SimulationTest, Step) {
     Vector2D expectedVelocity = vecSum(testedBoidOriginal.velocity, expectedCorrection);
     Vector2D expectedPosition = vecSum(testedBoidOriginal.position, expectedVelocity);
 
-    double accuracy = 1E-3;
+    double accuracy = 1E-5;
 
     EXPECT_NEAR(testedBoid.velocity.x, expectedVelocity.x, accuracy);
     EXPECT_NEAR(testedBoid.velocity.y, expectedVelocity.y, accuracy);
     EXPECT_NEAR(testedBoid.position.x, expectedPosition.x, accuracy);
     EXPECT_NEAR(testedBoid.position.y, expectedPosition.y, accuracy);
+}
+
+
+TEST_F(SimulationTest, LimitsSpeed) {
+    Flock sut;
+    Boid singleBoid(Vector2D(0, 0), Vector2D(1000, 1000));
+    sut.boids = std::vector<Boid> {singleBoid};
+    Flock result = step(sut);
+    Vector2D resultingVelocity = result.boids.front().velocity;
+    // 1000 * (SPEED_LIMIT / sqrt(1000 ^ 2 + 1000 ^ 2)), where speed_limit = 500;
+    EXPECT_NEAR(resultingVelocity.x, 353.55339059327372, 1E-5);
+    EXPECT_NEAR(resultingVelocity.y, 353.55339059327372, 1E-5);
 }

@@ -24,3 +24,8 @@ TEST_F(VectorOperationsTest, VectorMultiplyScalar) {
   EXPECT_EQ(result.x, 1.5);
   EXPECT_EQ(result.y, 2);
 }
+
+TEST_F(VectorOperationsTest, Magnitude) {
+  double magnitude = VectorOperations::magnitude(Vector2D(1, 3));
+  EXPECT_NEAR(magnitude, sqrt(10), 1E-10);
+}
