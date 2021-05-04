@@ -95,10 +95,10 @@ TEST_F(VisibleProximityTest, FindsNeigborWithVeryNarrowVision) {
 inline double L2_Reference(Vector2D a, Vector2D b) { return pow(a.x - b.x, 2) + pow(a.y - b.y, 2); }
 
 TEST_F(VisibleProximityTest, RandomTests) {
-    int N = 1000;
+  int N = 30; // if test runs in under 1 sec, we can reach this fps
 
     for (int testRun = 0; testRun < N; testRun++) {
-        int               numBoids = rand() % 100;
+        int               numBoids = 500;
         std::vector<Boid> boids;
         for (int boid = 0; boid < numBoids; boid++) {
             boids.push_back(
