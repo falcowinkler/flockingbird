@@ -38,6 +38,7 @@ target_link_libraries(
   flockingbird
   ${CAIRO_LIBRARIES}
   ${GTKMM_LIBRARIES}
+  
 )
 
 install(TARGETS flockingbird_demo DESTINATION ${FLOCKINGBIRD_INSTALL_BUILD_DIR})
