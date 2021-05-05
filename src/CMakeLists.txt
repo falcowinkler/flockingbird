@@ -14,7 +14,7 @@ set(SOURCE_FILES main.cpp)
 INCLUDE(FindPkgConfig)
 
 PKG_CHECK_MODULES(CAIRO REQUIRED cairo)
-pkg_check_modules(GTKMM gtkmm-2.4)
+pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
 
 add_executable(flockingbird_demo ${SOURCE_FILES})
 target_compile_features(flockingbird_demo PRIVATE cxx_std_17)
@@ -23,21 +23,21 @@ TARGET_INCLUDE_DIRECTORIES(
   flockingbird_demo
   PRIVATE
 	${CAIRO_INCLUDE_DIRS}
-  ${GTKMM_INCLUDE_DIRS}
+  ${GTK3_INCLUDE_DIRS}
   )
 
 target_link_directories(
   flockingbird_demo
   PRIVATE
   ${CAIRO_LIBRARY_DIRS}
-  ${GTKMM_LIBRARY_DIRS}
+  ${GTK3_LIBRARY_DIRS}
 )
 
 target_link_libraries(
   flockingbird_demo
   flockingbird
   ${CAIRO_LIBRARIES}
-  ${GTKMM_LIBRARIES}
+  ${GTK3_LIBRARIES}
   
 )
 
