@@ -57,7 +57,7 @@ public:
         std::vector<Boid> result;
         for (int i = 0; i < numBoids; i++) {
             Boid randomBoid(Vector2D(randomInBounds(0, maxX), randomInBounds(0, maxY)),
-                            Vector2D(randomInBounds(0, 1), randomInBounds(0, 1)));
+                            Vector2D(randomInBounds(0, 10), randomInBounds(0, 10)));
             result.push_back(randomBoid);
         }
         boids = result;

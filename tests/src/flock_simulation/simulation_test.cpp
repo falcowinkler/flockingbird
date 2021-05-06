@@ -16,7 +16,7 @@ protected:
         Boid boid2 = Boid(Vector2D(2, 3), Vector2D(2, 1.0));
         Boid boid3 = Boid(Vector2D(3, 4), Vector2D(1.0, 3.5));
         Boid boid4 = Boid(Vector2D(0, 0), Vector2D(1.0, 1.0));
-        Boid boid5 = Boid(Vector2D(6, 6),
+        Boid boid5 = Boid(Vector2D(1024, 1024),
                           Vector2D(1.0, 1.0));  // out of range boid, should not affect calculations
         proximity.push_back(boid1);
         proximity.push_back(boid2);

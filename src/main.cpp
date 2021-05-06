@@ -1,4 +1,4 @@
-#include "flock_simulation/flock.h"
+#include "flockingbird.h"
 #include <cairo.h>
 #include <gtk/gtk.h>
 #include <iostream>
@@ -7,7 +7,10 @@
 
 static void do_drawing(cairo_t*, GtkWidget*);
 
-static FlockSimulation::Flock flock(10, 10, 10);
+const int SCREEN_WIDTH = 1024;
+const int SCREEN_HEIGHT = 600;
+const int                     REFRESH_INTERVAL_REDRAW = 1000;
+static FlockSimulation::Flock flock(10, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr,
     gpointer user_data)
@@ -19,27 +22,26 @@ static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr,
 
 static void do_drawing(cairo_t *cr, GtkWidget *widget)
 {
+    const double dotSize = 5;
     std::cout << "draw" << std::endl;
 
-    GtkWidget* win = gtk_widget_get_toplevel(widget);
-    int width, height;
-    gtk_window_get_size(GTK_WINDOW(win), &width, &height);
-
-    cairo_set_line_width(cr, 9);
     cairo_set_source_rgb(cr, 0.69, 0.19, 0);
-
-    cairo_translate(cr, width / 2.0, height / 2.0);
-    cairo_arc(cr, 0, 0, 50, 0, 2 * M_PI);
-    cairo_stroke_preserve(cr);
-
-    cairo_set_source_rgb(cr, 0.3, 0.4, 0.6);
+    for (auto it = flock.boids.begin(); it != flock.boids.end(); it ++) {
+      double x = it->position.x;
+      double y = it->position.y;
+      cairo_set_line_width(cr, dotSize);
+      cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND); /* Round dot*/
+      cairo_move_to(cr, x, y);
+      cairo_line_to(cr, x, y); /* a very short line is a dot */
+      cairo_stroke(cr);
+    }
     cairo_fill(cr);
 }
 
-const int REFRESH_INTERVAL_REDRAW = 100;
 
 static void sendRedrawSignals(GtkWidget *widget) {
   gtk_widget_queue_draw(widget);
+  flock = step(flock);
 }
 
 int main (int argc, char *argv[])
@@ -60,7 +62,7 @@ int main (int argc, char *argv[])
   g_timeout_add(REFRESH_INTERVAL_REDRAW, (GSourceFunc) sendRedrawSignals, window);
 
   gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
-  gtk_window_set_default_size(GTK_WINDOW(window), 1024, 600);
+  gtk_window_set_default_size(GTK_WINDOW(window), SCREEN_WIDTH, SCREEN_HEIGHT);
   gtk_window_set_title(GTK_WINDOW(window), "Flock simulation");
 
   gtk_widget_show_all(window);

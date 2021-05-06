@@ -34,6 +34,7 @@ ln build/compile_commands.json .
 For the demo animation:
 ```bash
 brew install cairo
+brew install gtk+3
 ```
 
 NOTE: i had to 

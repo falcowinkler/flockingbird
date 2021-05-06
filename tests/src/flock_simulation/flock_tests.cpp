@@ -19,9 +19,9 @@ TEST_F(FlockingbirdTest, RandomInit) {
     for (int i = 0; i < 10; i++) {
         Boid boid = flock.boids[i];
         EXPECT_GE(boid.velocity.x, 0);
-        EXPECT_LE(boid.velocity.x, 1);
+        EXPECT_LE(boid.velocity.x, 10);
         EXPECT_GE(boid.velocity.y, 0);
-        EXPECT_LE(boid.velocity.y, 1);
+        EXPECT_LE(boid.velocity.y, 10);
         EXPECT_GE(boid.position.x, 0);
         EXPECT_LE(boid.position.x, 10);
         EXPECT_GE(boid.position.y, 0);
