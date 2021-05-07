@@ -9,8 +9,8 @@ static void do_drawing(cairo_t*, GtkWidget*);
 
 const int SCREEN_WIDTH = 1024;
 const int SCREEN_HEIGHT = 600;
-const int                     REFRESH_INTERVAL_REDRAW = 1000;
-static FlockSimulation::Flock flock(10, SCREEN_WIDTH, SCREEN_HEIGHT);
+const int                     REFRESH_INTERVAL_REDRAW = 30;
+static FlockSimulation::Flock flock(200, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr,
     gpointer user_data)
@@ -22,9 +22,8 @@ static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr,
 
 static void do_drawing(cairo_t *cr, GtkWidget *widget)
 {
-    const double dotSize = 5;
-    std::cout << "draw" << std::endl;
-
+    const double dotSize = 10;
+    // std::cout << "draw" << std::endl; 
     cairo_set_source_rgb(cr, 0.69, 0.19, 0);
     for (auto it = flock.boids.begin(); it != flock.boids.end(); it ++) {
       double x = it->position.x;

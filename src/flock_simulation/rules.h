@@ -10,7 +10,7 @@ namespace Rules {
 inline Vector2D seperation(Boid boidToUpdate, std::vector<Boid> closeProximity) {
     Vector2D c = Vector2D(0, 0);
     for (auto it = closeProximity.begin(); it != closeProximity.end(); it++) {
-        c = vecDiff(c, vecDiff(boidToUpdate.position, it->position));
+      c = vecDiff(c, vecDiff(it->position, boidToUpdate.position));
     }
     return c;
 }
@@ -27,7 +27,7 @@ inline Vector2D alignment(Boid boidToUpdate, std::vector<Boid> proximity) {
     }
     Vector2D     averageVelocity = vecMulScalar(aggregatedVelocity, 1.0 / proximity.size());
     Vector2D     diff            = vecDiff(averageVelocity, boidToUpdate.velocity);
-    const double scalingFactor   = 1.0 / 8;
+    const double scalingFactor   = 1.0 / 500;
     return vecMulScalar(diff, scalingFactor);
 }
 
@@ -44,7 +44,7 @@ inline Vector2D cohesion(Boid boidToUpdate, std::vector<Boid> proximity) {
     }
     const Vector2D averagedPosition = vecMulScalar(aggregatedPosition, 1.0 / proximity.size());
     const Vector2D diff             = vecDiff(averagedPosition, boidToUpdate.position);
-    const double   scalingFactor    = 1.0 / 100;  // One percent
+    const double   scalingFactor    = 1.0 / 50;
     return vecMulScalar(diff, scalingFactor);
 }
 };  // namespace Rules

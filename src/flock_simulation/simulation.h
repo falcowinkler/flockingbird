@@ -6,10 +6,12 @@ using namespace VectorOperations;
 
 const double SPEED_LIMIT = 500;
 const double POSITION_INCREMENT_SCALING_FACTOR = 1.0 / 100;
-
+// ranges in squared euclidean distance
+const double AVOIDANCE_RADIUS                  = 625;
+const double VISION_RANGE                      = 1000000.0;
 inline Flock step(Flock flock) {
     Flock            result(flock);
-    const double     visionRange       = 100000.0; // squared euclidean distance
+
     VisibleProximity visibleProximity(flock);
     // std::cout << "number of boids: " << flock.boids.size() << std::endl;
     for (int i = 0; i < flock.boids.size(); i++) {
@@ -17,19 +19,20 @@ inline Flock step(Flock flock) {
         // std::cout << "boid to update: " << boidToUpdate << std::endl;
 
         // TODO: include boid at index i from result;
-        std::vector<Boid> proximity      = visibleProximity.of(i, visionRange);
+        std::vector<Boid> proximity      = visibleProximity.of(i, VISION_RANGE);
+        std::vector<Boid> closeProximity      = visibleProximity.of(i, AVOIDANCE_RADIUS);
         //std::cout << "found proximity: " << std::endl;
         //for (auto it = proximity.begin(); it < proximity.end(); it++) {
         //  std::cout << "        " << *it << std::endl;
         //}
         //std::cout << "------------------\n";
         Vector2D          cohesion       = Rules::cohesion(boidToUpdate, proximity);
-        Vector2D          seperation     = Rules::seperation(boidToUpdate, proximity);
+        Vector2D          seperation     = Rules::seperation(boidToUpdate, closeProximity);
         Vector2D          alignment      = Rules::alignment(boidToUpdate, proximity);
 
-        std::cout << "cohesion: " << cohesion << std::endl;
-        std::cout << "separation: " << seperation << std::endl;
-        std::cout << "alignment: " << alignment << std::endl;
+        /* std::cout << "cohesion: " << cohesion << std::endl; */
+        /* std::cout << "separation: " << seperation << std::endl; */
+        /* std::cout << "alignment: " << alignment << std::endl; */
 
         Vector2D          velocityCorrection
             = vecSum(boidToUpdate.velocity, vecSum(vecSum(cohesion, seperation), alignment));
