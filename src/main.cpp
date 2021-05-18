@@ -16,18 +16,21 @@ static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr,
     gpointer user_data)
 {
   do_drawing(cr, widget);
-
   return FALSE;
+}
+
+inline double wrap(double val, double max) {
+    return val - max * floor(val / max);
 }
 
 static void do_drawing(cairo_t *cr, GtkWidget *widget)
 {
     const double dotSize = 10;
-    // std::cout << "draw" << std::endl; 
+    // std::cout << "draw" << std::endl;
     cairo_set_source_rgb(cr, 0.69, 0.19, 0);
     for (auto it = flock.boids.begin(); it != flock.boids.end(); it ++) {
-      double x = it->position.x;
-      double y = it->position.y;
+      double x = wrap(it->position.x, SCREEN_WIDTH);
+      double y = wrap(it->position.y, SCREEN_HEIGHT);
       cairo_set_line_width(cr, dotSize);
       cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND); /* Round dot*/
       cairo_move_to(cr, x, y);
@@ -40,7 +43,7 @@ static void do_drawing(cairo_t *cr, GtkWidget *widget)
 
 static void sendRedrawSignals(GtkWidget *widget) {
   gtk_widget_queue_draw(widget);
-  flock = step(flock);
+  step(flock);
 }
 
 int main (int argc, char *argv[])

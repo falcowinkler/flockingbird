@@ -2,8 +2,6 @@
 #include "gtest/gtest.h"
 #include <vector>
 
-using namespace std;
-using namespace FlockSimulation;
 
 class VectorOperationsTest : public ::testing::Test {
 
@@ -28,4 +26,20 @@ TEST_F(VectorOperationsTest, VectorMultiplyScalar) {
 TEST_F(VectorOperationsTest, Magnitude) {
   double magnitude = VectorOperations::magnitude(Vector2D(1, 3));
   EXPECT_NEAR(magnitude, sqrt(10), 1E-10);
+  magnitude = VectorOperations::magnitude(Vector2D(1, 50));
+  EXPECT_NEAR(magnitude, sqrt(2501), 1E-10);
+}
+
+TEST_F(VectorOperationsTest, Normalize) {
+    Vector2D normalized = VectorOperations::normalize(Vector2D(1, 3));
+    EXPECT_NEAR(normalized.x, 1.0 / sqrt(10), 1E-10);
+    EXPECT_NEAR(normalized.y, 3.0 / sqrt(10), 1E-10);
+    EXPECT_NEAR(VectorOperations::magnitude(normalized), 1, 1E-10);
+}
+
+TEST_F(VectorOperationsTest, TestSteer) {
+  Vector2D a = Vector2D(0, 1);
+  Vector2D result = VectorOperations::steer(Vector2D(1, 0), Vector2D(0, 1), 50);
+  EXPECT_EQ(result.x, 1);
+  EXPECT_EQ(result.y, -1);
 }

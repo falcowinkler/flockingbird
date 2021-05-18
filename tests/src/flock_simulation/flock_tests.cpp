@@ -1,9 +1,8 @@
 #include "gtest/gtest.h"
-#include "utility/vector_operations.h"
+#include "flock_simulation/flock.h"
 
 using namespace std;
 using namespace FlockSimulation;
-using namespace VectorOperations;
 
 class FlockingbirdTest : public ::testing::Test {
 

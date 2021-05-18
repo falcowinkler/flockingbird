@@ -3,7 +3,6 @@
 #include <vector>
 
 using namespace std;
-using namespace FlockSimulation;
 
 class RulesTest : public ::testing::Test {
 public:

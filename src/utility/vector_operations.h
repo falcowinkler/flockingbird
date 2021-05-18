@@ -1,7 +1,25 @@
 #pragma once
-#include "flock_simulation/flock.h"
+#include <iostream>
+#include <ostream>
+#include <math.h>
 
-using namespace FlockSimulation;
+class Vector2D {
+public:
+    Vector2D(const Vector2D& other)
+        : x(other.x)
+        , y(other.y) {}
+    Vector2D(double xIn, double yIn)
+        : x(xIn)
+        , y(yIn) {}
+    double x, y;
+
+    friend std::ostream& operator<<(std::ostream& outputStream, const Vector2D& p);
+};
+
+inline std::ostream& operator<<(std::ostream& outputStream, const Vector2D& p) {
+    outputStream << "[" << p.x << ", " << p.y << "]";
+    return outputStream;
+}
 
 namespace VectorOperations {
 
@@ -17,5 +35,23 @@ namespace VectorOperations {
 
   inline double magnitude(Vector2D a) {
     return sqrt(pow(a.x, 2) + pow(a.y, 2));
+  }
+
+  inline Vector2D normalize(Vector2D a) {
+    double mag = magnitude(a);
+    return Vector2D(a.x / mag, a.y / mag);
+  }
+
+  inline Vector2D limitMagnitude(Vector2D steer, double maxForce) {
+      if (magnitude(steer) > maxForce * maxForce) {
+         steer = vecMulScalar(normalize(steer), maxForce);
+      }
+      return steer;
+  }
+
+  inline Vector2D steer(Vector2D desired, Vector2D velocity, double maxForce) {
+      Vector2D steer = vecDiff(desired,  velocity);
+      steer = limitMagnitude(steer, maxForce);
+      return steer;
   }
 }
