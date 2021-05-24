@@ -35,7 +35,13 @@ class Simulation {
      flock(flockIn), configuration(configurationIn), rules(rules) {}
   Flock& flock;
   void step() {
-    
+    for (int i = 0; i < flock.boids.size(); i++) {
+      for (int r = 0; r < rules.size(); r++) {
+        Rule* rule = rules[r];
+        flock.boids[i].position
+            = vecSum(flock.boids[i].position, (*rule)(flock.boids[i], flock.boids));
+        }
+    }
   }
 };
 

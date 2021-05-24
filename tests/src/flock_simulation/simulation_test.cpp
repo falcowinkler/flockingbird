@@ -31,7 +31,7 @@ protected:
 
 
 class DummyRule : public Rule {
-  Vector2D apply(Boid boidToUpdate, std::vector<Boid> proximity) override {
+  Vector2D operator()(Boid boidToUpdate, std::vector<Boid> proximity) override {
     return Vector2D(1, 1);
   }
 };
