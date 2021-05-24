@@ -6,6 +6,12 @@
 
 using namespace VectorOperations;
 
+class Rule {
+public:
+  virtual Vector2D apply(Boid boidToUpdate, std::vector<Boid> proximity) = 0;
+};
+
+
 namespace Rules {
 const double maxForce = 0.06;
 // Boids try to keep a small distance away from other objects (including other boids).

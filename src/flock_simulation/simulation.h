@@ -11,6 +11,34 @@ const double POSITION_INCREMENT_SCALING_FACTOR = 2.0;
 const double AVOIDANCE_RADIUS = 1000.0;
 const double VISION_RANGE     = 10000.0;
 
+struct FlockSimulationParameters {
+  double speedLimit;
+  double positionIncrementScalingFactor;
+  double avoidanceRadius;
+  double visionRange;
+FlockSimulationParameters(double speedLimitIn,
+                          double positionIncrementScalingFactorIn,
+                          double avoidanceRadiusIn,
+                          double visionRangeIn)
+  : speedLimit(speedLimitIn),
+    positionIncrementScalingFactor(positionIncrementScalingFactorIn),
+    avoidanceRadius(avoidanceRadiusIn),
+    visionRange(visionRangeIn){}
+};
+
+class Simulation {
+ private:
+     FlockSimulationParameters configuration;
+     std::vector<Rule*> rules;
+ public:
+ Simulation(FlockSimulationParameters configurationIn, Flock& flockIn, std::vector<Rule*> rules):
+     flock(flockIn), configuration(configurationIn), rules(rules) {}
+  Flock& flock;
+  void step() {
+    
+  }
+};
+
 inline void step(Flock &flock) {
    VisibleProximity visibleProximity(flock);
    std::vector<Vector2D> velocityCorrections;
