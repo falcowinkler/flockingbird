@@ -13,6 +13,13 @@ public:
         , y(yIn) {}
     double x, y;
 
+    double magnitude() { return sqrt(pow(x, 2) + pow(y, 2)); }
+
+    Vector2D normalized() {
+        double mag = magnitude();
+        return Vector2D(x / mag, y / mag);
+    }
+
     friend std::ostream& operator<<(std::ostream& outputStream, const Vector2D& p);
 };
 
@@ -23,14 +30,16 @@ inline std::ostream& operator<<(std::ostream& outputStream, const Vector2D& p) {
 
 inline bool operator==(Vector2D a, Vector2D b) { return a.x == b.x && a.y == b.y; }
 
+inline Vector2D operator+(Vector2D a, Vector2D b) { return Vector2D(a.x + b.x, a.y + b.y); }
+
+inline Vector2D operator-(Vector2D a, Vector2D b) {  return Vector2D(a.x - b.x, a.y - b.y);  }
+
+inline Vector2D operator*(Vector2D a, double x) { return Vector2D(a.x*x, a.y*x); }
+
 namespace VectorOperations {
 
   inline Vector2D vecSum(Vector2D a, Vector2D b) {
     return Vector2D(a.x + b.x, a.y+b.y);
-  }
-
-  inline Vector2D operator+(Vector2D a, Vector2D b) {
-    return Vector2D(a.x + b.x, a.y + b.y);
   }
 
   inline Vector2D vecDiff(Vector2D a, Vector2D b) { return Vector2D(a.x - b.x, a.y - b.y); }
