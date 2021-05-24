@@ -31,13 +31,17 @@ protected:
 
 
 class DummyRule : public Rule {
+public:
+  DummyRule(): callReturnValue(Vector2D(1, 1)) {
+  }
+  Vector2D callReturnValue;
   Vector2D operator()(Boid boidToUpdate, std::vector<Boid> proximity) override {
-    return Vector2D(1, 1);
+    return callReturnValue;
   }
 };
 
 
-TEST_F(SimulationTest, TestStepAppliesRulesToBoid) {
+TEST_F(SimulationTest, TestStepAppliesRulesToSingleOutlierBoid) {
   FlockSimulationParameters testParameters = FlockSimulationParameters(500, 1, 1, 2);
   DummyRule                 dummyRule;
   std::vector<Rule*>        rules;
@@ -46,6 +50,11 @@ TEST_F(SimulationTest, TestStepAppliesRulesToBoid) {
   simulation.step();
 
   Boid outlierBoid = flock.boids[4];
-  EXPECT_EQ(outlierBoid.position.x, 1025);
-  EXPECT_EQ(outlierBoid.position.x, 1025);
+  Vector2D expectedPosition = Vector2D(1025, 1025);
+  EXPECT_EQ(outlierBoid.position, expectedPosition);
+}
+
+
+TEST_F(SimulationTest, TestSteppAppliesRulesForAllNeighbors) {
+  
 }

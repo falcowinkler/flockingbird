@@ -21,10 +21,16 @@ inline std::ostream& operator<<(std::ostream& outputStream, const Vector2D& p) {
     return outputStream;
 }
 
+inline bool operator==(Vector2D a, Vector2D b) { return a.x == b.x && a.y == b.y; }
+
 namespace VectorOperations {
 
   inline Vector2D vecSum(Vector2D a, Vector2D b) {
     return Vector2D(a.x + b.x, a.y+b.y);
+  }
+
+  inline Vector2D operator+(Vector2D a, Vector2D b) {
+    return Vector2D(a.x + b.x, a.y + b.y);
   }
 
   inline Vector2D vecDiff(Vector2D a, Vector2D b) { return Vector2D(a.x - b.x, a.y - b.y); }
