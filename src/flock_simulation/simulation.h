@@ -39,7 +39,7 @@ class Simulation {
       for (int r = 0; r < rules.size(); r++) {
         Rule* rule = rules[r];
         flock.boids[i].position
-            = vecSum(flock.boids[i].position, (*rule)(flock.boids[i], flock.boids));
+          = vecSum(flock.boids[i].position, (*rule)(flock.boids[i], flock.boids, flock.boids));
         }
     }
   }
