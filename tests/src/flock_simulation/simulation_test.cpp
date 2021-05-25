@@ -36,7 +36,7 @@ public:
   }
   Vector2D callReturnValue;
   int callCount = 0;
-  Vector2D operator()(Boid boidToUpdate, std::vector<Boid> proximity, std::vector<Boid> closeProximity) override {
+  Vector2D operator()(Boid boidToUpdate, std::vector<Boid> proximity, FlockSimulationParameters configuration) override {
     callCount++;
     return callReturnValue;
   }

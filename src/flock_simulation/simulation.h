@@ -1,6 +1,7 @@
 #include "flock_simulation/rules.h"
 #include "nearest_neighbors/visible_proximity.h"
 #include <vector>
+#include "configuration.h"
 
 using namespace FlockSimulation;
 using namespace VectorOperations;
@@ -11,20 +12,6 @@ const double POSITION_INCREMENT_SCALING_FACTOR = 2.0;
 const double AVOIDANCE_RADIUS = 1000.0;
 const double VISION_RANGE     = 10000.0;
 
-struct FlockSimulationParameters {
-  double speedLimit;
-  double positionIncrementScalingFactor;
-  double avoidanceRadius;
-  double visionRange;
-FlockSimulationParameters(double speedLimitIn,
-                          double positionIncrementScalingFactorIn,
-                          double avoidanceRadiusIn,
-                          double visionRangeIn)
-  : speedLimit(speedLimitIn),
-    positionIncrementScalingFactor(positionIncrementScalingFactorIn),
-    avoidanceRadius(avoidanceRadiusIn),
-    visionRange(visionRangeIn){}
-};
 
 class Simulation {
  private:
@@ -40,9 +27,8 @@ class Simulation {
           for (int r = 0; r < rules.size(); r++) {
               Rule*             rule           = rules[r];
               std::vector<Boid> proximity = visibleProximity.of(i, configuration.visionRange);
-              std::vector<Boid> closeProximity = visibleProximity.of(i, configuration.avoidanceRadius);
               flock.boids[i].position = flock.boids[i].position +
-                                               (*rule)(flock.boids[i], proximity, closeProximity);
+                                               (*rule)(flock.boids[i], proximity, configuration);
           }
     }
   }

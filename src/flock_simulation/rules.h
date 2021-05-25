@@ -1,4 +1,5 @@
 #include "boid.h"
+#include "configuration.h"
 #include "utility/vector_operations.h"
 #include <iostream>
 #include <vector>
@@ -9,7 +10,7 @@ using namespace VectorOperations;
 class Rule {
 public:
     virtual Vector2D
-    operator()(Boid boidToUpdate, std::vector<Boid> proximity, std::vector<Boid> closeProximity)
+    operator()(Boid boidToUpdate, std::vector<Boid> proximity, FlockSimulationParameters configuration)
         = 0;
 };
 
