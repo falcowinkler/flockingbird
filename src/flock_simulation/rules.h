@@ -23,9 +23,9 @@ inline Vector2D seperation(Boid boidToUpdate, std::vector<Boid> closeProximity) 
       return c;
     }
     for (auto it = closeProximity.begin(); it != closeProximity.end(); it++) {
-      c = vecDiff(c, vecDiff(it->position, boidToUpdate.position));
+      c = c - (it->position - boidToUpdate.position);
     }
-    return steer(normalize(c), boidToUpdate.velocity, maxForce);
+    return steer(c.normalized(), boidToUpdate.velocity, maxForce);
 }
 
 // Boids try to match velocity with near boids.
@@ -36,13 +36,13 @@ inline Vector2D alignment(Boid boidToUpdate, std::vector<Boid> proximity) {
 
     Vector2D aggregatedVelocity(0, 0);
     for (auto it = proximity.begin(); it != proximity.end(); it++) {
-        aggregatedVelocity = vecSum(aggregatedVelocity, it->velocity);
+        aggregatedVelocity = aggregatedVelocity + it->velocity;
     }
-    Vector2D     averageVelocity = vecMulScalar(aggregatedVelocity, 1.0 / proximity.size());
-    Vector2D     diff            = vecDiff(averageVelocity, boidToUpdate.velocity);
+    Vector2D     averageVelocity = aggregatedVelocity * (1.0 / proximity.size());
+    Vector2D     diff            = averageVelocity - boidToUpdate.velocity;
     const double scalingFactor   = 1.0/8;
-    Vector2D alignment = vecMulScalar(diff, scalingFactor);
-    return steer(normalize(alignment), boidToUpdate.velocity, maxForce);
+    Vector2D alignment = diff * scalingFactor;
+    return steer(alignment.normalized(), boidToUpdate.velocity, maxForce);
 }
 
 // Boids try to fly towards the centre of mass of neighbouring boids.
@@ -54,12 +54,12 @@ inline Vector2D cohesion(Boid boidToUpdate, std::vector<Boid> proximity) {
     proximity.size();
     Vector2D aggregatedPosition(0, 0);
     for (auto it = proximity.begin(); it != proximity.end(); it++) {
-        aggregatedPosition = vecSum(aggregatedPosition, it->position);
+        aggregatedPosition = aggregatedPosition + it->position;
     }
-    const Vector2D averagedPosition = vecMulScalar(aggregatedPosition, 1.0 / proximity.size());
-    const Vector2D diff             = vecDiff(averagedPosition, boidToUpdate.position);
+    const Vector2D averagedPosition = aggregatedPosition * (1.0 / proximity.size());
+    const Vector2D diff             = averagedPosition - boidToUpdate.position;
     const double   scalingFactor    = 1.0;
-    Vector2D cohesion = vecMulScalar(diff, scalingFactor);
-    return steer(normalize(cohesion), boidToUpdate.velocity, maxForce);
+    Vector2D cohesion = diff * scalingFactor;
+    return steer(cohesion.normalized(), boidToUpdate.velocity, maxForce);
 }
 };  // namespace Rules

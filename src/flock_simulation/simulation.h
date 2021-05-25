@@ -35,12 +35,15 @@ class Simulation {
      flock(flockIn), configuration(configurationIn), rules(rules) {}
   Flock& flock;
   void step() {
-    for (int i = 0; i < flock.boids.size(); i++) {
-      for (int r = 0; r < rules.size(); r++) {
-        Rule* rule = rules[r];
-        flock.boids[i].position
-          = vecSum(flock.boids[i].position, (*rule)(flock.boids[i], flock.boids, flock.boids));
-        }
+      VisibleProximity visibleProximity(flock);
+      for (int i = 0; i < flock.boids.size(); i++) {
+          for (int r = 0; r < rules.size(); r++) {
+              Rule*             rule           = rules[r];
+              std::vector<Boid> proximity = visibleProximity.of(i, configuration.visionRange);
+              std::vector<Boid> closeProximity = visibleProximity.of(i, configuration.avoidanceRadius);
+              flock.boids[i].position = flock.boids[i].position +
+                                               (*rule)(flock.boids[i], proximity, closeProximity);
+          }
     }
   }
 };
@@ -64,7 +67,7 @@ inline void step(Flock &flock) {
         // std::cout << "alignment: " << alignment << std::endl;
 
         Vector2D          velocityCorrection
-            = vecSum(boidToUpdate.velocity, vecSum(vecSum(cohesion, separation), alignment));
+            = boidToUpdate.velocity + cohesion + separation + alignment;
 
         /*  if (magnitude(velocityCorrection) > SPEED_LIMIT) {
             velocityCorrection
@@ -73,12 +76,12 @@ inline void step(Flock &flock) {
         // Add wind?
         //  velocityCorrection = vecSum(velocityCorrection, Vector2D(-1, -1));
         velocityCorrections.push_back(velocityCorrection);
-        Vector2D scaledVelocity = vecMulScalar(velocityCorrection, POSITION_INCREMENT_SCALING_FACTOR);
-        positionUpdates.push_back(vecSum(flock.boids[i].position, scaledVelocity));
+        Vector2D scaledVelocity = velocityCorrection * POSITION_INCREMENT_SCALING_FACTOR;
+        positionUpdates.push_back(flock.boids[i].position + scaledVelocity);
     }
     for (int i = 0; i < flock.boids.size(); i++) {
 
-      flock.boids[i].velocity = normalize(velocityCorrections[i]);
+      flock.boids[i].velocity = velocityCorrections[i].normalized();
         flock.boids[i].position = positionUpdates[i];
     }
 }

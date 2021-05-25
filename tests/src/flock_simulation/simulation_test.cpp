@@ -30,12 +30,14 @@ protected:
 };
 
 
-class DummyRule : public Rule {
+class MockRule : public Rule {
 public:
-  DummyRule(): callReturnValue(Vector2D(1, 1)) {
+  MockRule(): callReturnValue(Vector2D(1, 1)) {
   }
   Vector2D callReturnValue;
+  int callCount = 0;
   Vector2D operator()(Boid boidToUpdate, std::vector<Boid> proximity, std::vector<Boid> closeProximity) override {
+    callCount++;
     return callReturnValue;
   }
 };
@@ -44,7 +46,7 @@ public:
 TEST_F(SimulationTest, TestStepAppliesRulesToSingleOutlierBoid) {
   // Arrange
   FlockSimulationParameters testParameters = FlockSimulationParameters(500, 1, 1, 2);
-  DummyRule                 dummyRule;
+  MockRule                 dummyRule;
   std::vector<Rule*>        rules;
   rules.push_back(&dummyRule);
   Simulation simulation(testParameters, flock, rules);
@@ -53,13 +55,14 @@ TEST_F(SimulationTest, TestStepAppliesRulesToSingleOutlierBoid) {
   Boid outlierBoid = flock.boids[4];
   Vector2D expectedPosition = Vector2D(1025, 1025);
   EXPECT_EQ(outlierBoid.position, expectedPosition);
+  EXPECT_EQ(outlierBoid.velocity, Vector2D(1, 1));
 }
 
 
 TEST_F(SimulationTest, TestSteppAppliesRulesForAllNeighbors) {
     // Arrange
     FlockSimulationParameters testParameters = FlockSimulationParameters(500, 1, 1, 2);
-    DummyRule                 dummyRule;
+    MockRule                 dummyRule;
     std::vector<Rule*>        rules;
     rules.push_back(&dummyRule);
     Simulation simulation(testParameters, flock, rules);
@@ -68,7 +71,5 @@ TEST_F(SimulationTest, TestSteppAppliesRulesForAllNeighbors) {
     simulation.step();
 
     // Assert
-    Boid firstBoid = flock.boids[0];
-    Vector2D expectedPosition(1 + 3, 2 + 3);
-    EXPECT_EQ(firstBoid.position, expectedPosition);
+    EXPECT_EQ(dummyRule.callCount, 5);
 }
