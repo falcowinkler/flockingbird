@@ -2,6 +2,7 @@
 #include "gtest/gtest.h"
 #include <iostream>
 #include "flock_simulation/simulation.h"
+#include "gmock/gmock.h"
 
 using namespace std;
 using namespace FlockSimulation;

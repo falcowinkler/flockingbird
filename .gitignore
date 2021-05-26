@@ -49,3 +49,8 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 .clangd
+
+
+# libs from FetchContentMakeAvailable
+include/
+lib/
