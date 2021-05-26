@@ -4,9 +4,10 @@
 #include "flock_simulation/simulation.h"
 #include "gmock/gmock.h"
 
-using namespace std;
 using namespace FlockSimulation;
 using namespace VectorOperations;
+using ::testing::_;
+using ::testing::Return;
 
 class SimulationTest : public ::testing::Test {
 public:
@@ -36,10 +37,9 @@ public:
   MockRule(): callReturnValue(Vector2D(1, 1)) {
   }
   Vector2D callReturnValue;
-  int callCount = 0;
+  MOCK_METHOD(Vector2D, Apply, (Boid, std::vector<Boid>, FlockSimulationParameters));
   Vector2D operator()(Boid boidToUpdate, std::vector<Boid> proximity, FlockSimulationParameters configuration) override {
-    callCount++;
-    return callReturnValue;
+    return Apply(boidToUpdate, proximity, configuration);
   }
 };
 
@@ -48,29 +48,33 @@ TEST_F(SimulationTest, TestStepAppliesRulesToSingleOutlierBoid) {
   // Arrange
   FlockSimulationParameters testParameters = FlockSimulationParameters(500, 1, 1, 2);
   MockRule                 dummyRule;
+  EXPECT_CALL(dummyRule, Apply(_, _, _))
+    .WillRepeatedly(Return(Vector2D(1, 1)));
+
   std::vector<Rule*>        rules;
   rules.push_back(&dummyRule);
   Simulation simulation(testParameters, flock, rules);
+  // Act
   simulation.step();
 
   Boid outlierBoid = flock.boids[4];
   Vector2D expectedPosition = Vector2D(1025, 1025);
+
+  // Assert
   EXPECT_EQ(outlierBoid.position, expectedPosition);
   EXPECT_EQ(outlierBoid.velocity, Vector2D(1, 1));
 }
 
 
 TEST_F(SimulationTest, TestSteppAppliesRulesForAllNeighbors) {
-    // Arrange
-    FlockSimulationParameters testParameters = FlockSimulationParameters(500, 1, 1, 2);
-    MockRule                 dummyRule;
-    std::vector<Rule*>        rules;
-    rules.push_back(&dummyRule);
-    Simulation simulation(testParameters, flock, rules);
+  // Arrange
+  FlockSimulationParameters testParameters = FlockSimulationParameters(500, 1, 1, 2);
+  MockRule                  dummyRule;
+  std::vector<Rule*>        rules;
+  rules.push_back(&dummyRule);
+  Simulation simulation(testParameters, flock, rules);
+  EXPECT_CALL(dummyRule, Apply(_, _, _)).Times(5).WillRepeatedly(Return(Vector2D(1, 1)));
 
-    // Act
-    simulation.step();
-
-    // Assert
-    EXPECT_EQ(dummyRule.callCount, 5);
+  // Act
+  simulation.step();
 }
