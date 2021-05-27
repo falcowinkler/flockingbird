@@ -2,7 +2,6 @@
 #include "flock_simulation/flock.h"
 
 using namespace std;
-using namespace FlockSimulation;
 
 class FlockingbirdTest : public ::testing::Test {
 

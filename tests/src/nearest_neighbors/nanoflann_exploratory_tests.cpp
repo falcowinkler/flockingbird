@@ -4,7 +4,6 @@
 
 using namespace nanoflann;
 using namespace std;
-using namespace FlockSimulation;
 
 const int dim = 2;
 const int maxLeaf = 10;

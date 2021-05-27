@@ -7,8 +7,6 @@
 #include <vector>
 
 using namespace nanoflann;
-using namespace std;
-using namespace FlockSimulation;
 
 class VisibleProximityTest : public ::testing::Test {
 public:

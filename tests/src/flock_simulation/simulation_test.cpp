@@ -4,7 +4,6 @@
 #include "flock_simulation/simulation.h"
 #include "gmock/gmock.h"
 
-using namespace FlockSimulation;
 using namespace VectorOperations;
 using ::testing::_;
 using ::testing::Return;
@@ -53,7 +52,7 @@ TEST_F(SimulationTest, TestStepAppliesRulesToSingleOutlierBoid) {
 
   std::vector<Rule*>        rules;
   rules.push_back(&dummyRule);
-  Simulation simulation(testParameters, flock, rules);
+  FlockSimulation simulation(testParameters, flock, rules);
   // Act
   simulation.step();
 
@@ -72,7 +71,7 @@ TEST_F(SimulationTest, TestSteppAppliesRulesForAllNeighbors) {
   MockRule                  dummyRule;
   std::vector<Rule*>        rules;
   rules.push_back(&dummyRule);
-  Simulation simulation(testParameters, flock, rules);
+  FlockSimulation simulation(testParameters, flock, rules);
   EXPECT_CALL(dummyRule, Apply(_, _, _)).Times(5).WillRepeatedly(Return(Vector2D(1, 1)));
 
   // Act

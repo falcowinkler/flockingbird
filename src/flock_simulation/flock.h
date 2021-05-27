@@ -3,9 +3,6 @@
 #include "boid.h"
 
 #pragma once
-
-namespace FlockSimulation {
-
 class Flock {
 public:
     // constructors
@@ -45,4 +42,3 @@ public:
         return false;
     }
 };
-}  // namespace FlockSimulation

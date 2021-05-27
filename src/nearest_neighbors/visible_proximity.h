@@ -4,7 +4,6 @@
 #include <ostream>
 #include <vector>
 using namespace nanoflann;
-using namespace FlockSimulation;
 
 const int dim     = 2;
 const int maxLeaf = 10;
@@ -18,7 +17,7 @@ private:
   kd_tree_t kdTree;
 
 public:
-    VisibleProximity(FlockSimulation::Flock flockToQuery)
+    VisibleProximity(Flock flockToQuery)
         : flock(flockToQuery)
         , kdTree(dim, flock, KDTreeSingleIndexAdaptorParams(maxLeaf)) {
           kdTree.buildIndex();

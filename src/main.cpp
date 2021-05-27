@@ -9,9 +9,27 @@ static void do_drawing(cairo_t*, GtkWidget*);
 
 const int SCREEN_WIDTH = 1024;
 const int SCREEN_HEIGHT = 600;
-const int                     REFRESH_INTERVAL_REDRAW = 30;
-static FlockSimulation::Flock flock(200, SCREEN_WIDTH, SCREEN_HEIGHT);
+const int REFRESH_INTERVAL_REDRAW = 30;
 
+double speedLimit = 3;
+double forceLimit = 0.03;
+double positionIncrementScalingFactor = 1;
+double avoidanceRadius = 25;
+double visionRange = 50;
+double separationWeight = 1.5;
+double alignmentWeight = 1.0;
+double cohesionWeight = 1.0;
+
+static FlockSimulationParameters flockSimulationParameters(speedLimit,
+                                                           forceLimit,
+                                                           positionIncrementScalingFactor,
+                                                           avoidanceRadius,
+                                                           visionRange,
+                                                           separationWeight,
+                                                           alignmentWeight,
+                                                           cohesionWeight);
+static Flock flock(10, 10, 10);
+static FlockSimulation flockSimulation(flockSimulationParameters, flock, defaultRules);
 static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr,
     gpointer user_data)
 {
@@ -43,8 +61,8 @@ static void do_drawing(cairo_t *cr, GtkWidget *widget)
 
 static void sendRedrawSignals(GtkWidget *widget) {
   gtk_widget_queue_draw(widget);
-  step(flock);
-}
+  flockSimulation.step();
+  }
 
 int main (int argc, char *argv[])
 {
