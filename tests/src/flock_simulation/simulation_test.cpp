@@ -47,6 +47,7 @@ TEST_F(SimulationTest, TestStepAppliesRulesToSingleOutlierBoid) {
   // Arrange
   FlockSimulationParameters testParameters;
   MockRule                 dummyRule;
+  testParameters.speedLimit = 500;
   EXPECT_CALL(dummyRule, Apply(_, _, _))
     .WillRepeatedly(Return(Vector2D(1, 1)));
 
@@ -57,17 +58,18 @@ TEST_F(SimulationTest, TestStepAppliesRulesToSingleOutlierBoid) {
   simulation.step();
 
   Boid outlierBoid = flock.boids[4];
-  Vector2D expectedPosition = Vector2D(1025, 1025);
+  Vector2D expectedPosition = Vector2D(1026, 1026);
 
   // Assert
   EXPECT_EQ(outlierBoid.position, expectedPosition);
-  EXPECT_EQ(outlierBoid.velocity, Vector2D(1, 1));
+  EXPECT_EQ(outlierBoid.velocity, Vector2D(2, 2));
 }
 
 
 TEST_F(SimulationTest, TestSteppAppliesRulesForAllNeighbors) {
   // Arrange
   FlockSimulationParameters testParameters;
+  testParameters.speedLimit = 500;
   MockRule                  dummyRule;
   std::vector<Rule*>        rules;
   rules.push_back(&dummyRule);
