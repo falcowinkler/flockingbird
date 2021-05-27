@@ -120,3 +120,24 @@ TEST_F(RulesTest, AligmentSimpleTest) {
   EXPECT_NEAR(expectedResult.x, actualResult.x, 1E-10);
   EXPECT_NEAR(expectedResult.y, actualResult.y, 1E-10);
 }
+
+TEST_F(RulesTest, AlignComplexTest) {
+    FlockSimulationParameters parameters;
+    parameters.speedLimit          = 3;
+    parameters.forceLimit          = 0.1;
+    Boid              boidToUpdate = Boid(Vector2D(2.0, 2.0), Vector2D(2.5, 1.5));
+    Boid              boid2        = Boid(Vector2D(1.5, 1.5), Vector2D(1.0, 2.1));
+    Boid              boid3        = Boid(Vector2D(0.5, 0.5), Vector2D(3.5, 1.0));
+    std::vector<Boid> proximity{ boid2, boid3 };
+    AlignmentRule     rule;
+
+    Vector2D expectedResult
+      = (((Vector2D(4.5, 3.1) / 2).normalized() * 3) - Vector2D(2.5, 1.5)).limit(0.1);
+
+    // Act
+    Vector2D actualResult = rule(boidToUpdate, proximity, parameters);
+
+    // Assert
+    EXPECT_NEAR(expectedResult.x, actualResult.x, 1E-10);
+    EXPECT_NEAR(expectedResult.y, actualResult.y, 1E-10);
+}

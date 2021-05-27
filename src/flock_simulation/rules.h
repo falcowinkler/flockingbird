@@ -49,7 +49,19 @@ public:
     virtual Vector2D operator()(Boid                      boidToUpdate,
                                 std::vector<Boid>         proximity,
                                 FlockSimulationParameters configuration) {
-        return Vector2D(-0.070710678118654752, -0.070710678118654752);
+      Vector2D sum(0, 0);
+      int count = 0;
+      for (Boid boid: proximity) {
+        sum = sum + boid.velocity;
+        count++;
+      }
+      if (count > 0) {
+        sum = sum / count;
+        sum = sum.normalized() * configuration.speedLimit;
+        Vector2D steer = sum - boidToUpdate.velocity;
+        return steer.limit(configuration.forceLimit);
+      }
+      return sum;
     }
 };
 
