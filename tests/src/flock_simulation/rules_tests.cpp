@@ -20,3 +20,83 @@ protected:
     Boid              boidToUpdate;
     virtual void      TearDown(){};
 };
+
+
+TEST_F(RulesTest, SeparationSimplestTest) {
+  // Arrange Simple test with just one neighbor, and unit parameters
+  FlockSimulationParameters parameters;
+  parameters.speedLimit = 1;
+  parameters.forceLimit = 500;
+  parameters.avoidanceRadius = 25;
+  Boid boidToUpdate                 = Boid(Vector2D(2.0, 2.0), Vector2D(1.0, 1.0));
+  Boid boid2                 = Boid(Vector2D(1.0, 1.0), Vector2D(1.0, 1.0));
+  std::vector<Boid> proximity { boid2 };
+  SeparationRule rule;
+
+  // Difference between two boids is 1, 1
+  // This is normalized and devided by the distance (sqrt 2)
+  // Averaged (which has no effect)
+  Vector2D expectedSteer = Vector2D(1, 1).normalized() * (1.0/sqrt(2));
+
+    // After that we normalize the result
+    // multiply with max speed (no effect)
+    // subtract the velocity (1, 1)
+    // and limit it by max force (no effect)
+  Vector2D expectedResult = expectedSteer.normalized() - Vector2D(1, 1);
+
+  // Act
+  Vector2D actualResult = rule(boidToUpdate, proximity, parameters);
+
+  // Assert
+  EXPECT_NEAR(expectedResult.x, actualResult.x, 1E-10);
+  EXPECT_NEAR(expectedResult.y, actualResult.y, 1E-10);
+}
+
+TEST_F(RulesTest, SeparationCancellingForcesTest) {
+  // Arrange
+    FlockSimulationParameters parameters;
+    parameters.speedLimit          = 3;
+    parameters.forceLimit          = 500;
+    parameters.avoidanceRadius     = 25;
+    Boid              boidToUpdate = Boid(Vector2D(2.0, 2.0), Vector2D(2.5, 1.5));
+    Boid              boid2        = Boid(Vector2D(1.0, 1.0), Vector2D(1.0, 1.0));
+    Boid              boid3        = Boid(Vector2D(3.0, 3.0), Vector2D(1.0, 1.0));
+    std::vector<Boid> proximity{boid2, boid3};
+    SeparationRule    rule;
+    Vector2D          diff1 = Vector2D(0.5, 0.5);
+    Vector2D          diff2 = Vector2D(-0.5, -0.5);
+
+    // Act
+    Vector2D actualResult = rule(boidToUpdate, proximity, parameters);
+    // Assert
+    EXPECT_NEAR(0, actualResult.x, 1E-10);
+    EXPECT_NEAR(0, actualResult.y, 1E-10);
+}
+
+TEST_F(RulesTest, SeparationComplexTest) {
+  // Arrange Simple test with just one neighbor, and unit parameters
+  FlockSimulationParameters parameters;
+  parameters.speedLimit = 3;
+  parameters.forceLimit = 0.1;
+  parameters.avoidanceRadius = 25;
+  Boid              boidToUpdate = Boid(Vector2D(2.0, 2.0), Vector2D(2.5, 1.5));
+  Boid              boid2        = Boid(Vector2D(1.5, 1.5), Vector2D(1.0, 1.0));
+  Boid              boid3        = Boid(Vector2D(0.5, 0.5), Vector2D(1.0, 1.0));
+  std::vector<Boid> proximity { boid2, boid3 };
+  SeparationRule rule;
+
+  double dist1 = Vector2D(2.0, 2.0).distanceTo(Vector2D(1.5, 1.5));
+  double   dist2 = Vector2D(2.0, 2.0).distanceTo(Vector2D(0.5, 0.5));
+  Vector2D diff1         = Vector2D(0.5, 0.5).normalized() / dist1;
+  Vector2D diff2         = Vector2D(1.5, 1.5).normalized() / dist2;
+  Vector2D expectedSteer = (diff1 + diff2) / 2;
+
+  Vector2D expectedResult = ((expectedSteer.normalized() * 3) - Vector2D(2.5, 1.5)).limit(0.1);
+
+  // Act
+  Vector2D actualResult = rule(boidToUpdate, proximity, parameters);
+
+  // Assert
+  EXPECT_NEAR(expectedResult.x, actualResult.x, 1E-10);
+  EXPECT_NEAR(expectedResult.y, actualResult.y, 1E-10);
+}

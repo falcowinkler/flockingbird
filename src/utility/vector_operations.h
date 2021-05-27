@@ -20,6 +20,20 @@ public:
         return Vector2D(x / mag, y / mag);
     }
 
+  double distanceTo(Vector2D other) {
+    double a = abs(x-other.x);
+    double b = abs(y-other.y);
+    return Vector2D(a, b).magnitude();
+  }
+
+  Vector2D limit(double maxForce) {
+      if (magnitude() > maxForce * maxForce) {
+          Vector2D norm =  normalized();
+          return Vector2D(norm.x * maxForce, norm.y * maxForce);
+      }
+      return *this;
+  }
+
     friend std::ostream& operator<<(std::ostream& outputStream, const Vector2D& p);
 };
 
@@ -34,7 +48,8 @@ inline Vector2D operator+(Vector2D a, Vector2D b) { return Vector2D(a.x + b.x, a
 
 inline Vector2D operator-(Vector2D a, Vector2D b) {  return Vector2D(a.x - b.x, a.y - b.y);  }
 
-inline Vector2D operator*(Vector2D a, double x) { return Vector2D(a.x*x, a.y*x); }
+inline Vector2D operator*(Vector2D a, double x) { return Vector2D(a.x * x, a.y * x); }
+inline Vector2D operator/(Vector2D a, double x) { return Vector2D(a.x / x, a.y / x); }
 
 namespace VectorOperations {
 

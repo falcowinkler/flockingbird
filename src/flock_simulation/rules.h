@@ -14,6 +14,41 @@ public:
         = 0;
 };
 
+class SeparationRule: public Rule {
+  public:
+      virtual Vector2D operator()(Boid                      boidToUpdate,
+                std::vector<Boid>         proximity,
+                                  FlockSimulationParameters configuration) {
+        int count = 0;
+        Vector2D steer(0, 0);
+        std::cout << proximity[0] << std::endl;
+        std::cout << proximity[1] << std::endl;
+        for (Boid boid : proximity) {
+          double d = boidToUpdate.position.distanceTo(boid.position);
+
+          std::cout << "boid to update:" << boidToUpdate << "other: "  << boid <<  std::endl;
+          std::cout << "d" << d << std::endl;
+          if (d > 0 && d < configuration.avoidanceRadius) {
+            Vector2D diff = (boidToUpdate.position - boid.position).normalized() / d;
+            std::cout << "diff" << diff << std::endl;
+            steer = steer + diff;
+            count += 1;
+          }
+        }
+        if (count > 0) {
+          steer = steer / count;
+        }
+        std::cout << "actual steer: " << steer << std::endl;
+        if (steer.magnitude() > 0) {
+          steer = steer.normalized();
+          steer = steer * configuration.speedLimit;
+          steer = steer - boidToUpdate.velocity;
+          return steer.limit(configuration.forceLimit);
+        }
+        return steer;
+      };
+};
+
 
 namespace Rules {
 const double maxForce = 0.06;

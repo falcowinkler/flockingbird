@@ -46,7 +46,7 @@ public:
 
 TEST_F(SimulationTest, TestStepAppliesRulesToSingleOutlierBoid) {
   // Arrange
-  FlockSimulationParameters testParameters = FlockSimulationParameters(500, 1, 1, 2);
+  FlockSimulationParameters testParameters;
   MockRule                 dummyRule;
   EXPECT_CALL(dummyRule, Apply(_, _, _))
     .WillRepeatedly(Return(Vector2D(1, 1)));
@@ -68,7 +68,7 @@ TEST_F(SimulationTest, TestStepAppliesRulesToSingleOutlierBoid) {
 
 TEST_F(SimulationTest, TestSteppAppliesRulesForAllNeighbors) {
   // Arrange
-  FlockSimulationParameters testParameters = FlockSimulationParameters(500, 1, 1, 2);
+  FlockSimulationParameters testParameters;
   MockRule                  dummyRule;
   std::vector<Rule*>        rules;
   rules.push_back(&dummyRule);
