@@ -38,7 +38,7 @@ class SeparationRule: public Rule {
           steer = steer.normalized();
           steer = steer * configuration.speedLimit;
           steer = steer - boidToUpdate.velocity;
-          return steer.limit(configuration.forceLimit);
+          return steer.limit(configuration.forceLimit) * configuration.separationWeight;
         }
         return steer;
       };
@@ -59,7 +59,7 @@ public:
         sum = sum / count;
         sum = sum.normalized() * configuration.speedLimit;
         Vector2D steer = sum - boidToUpdate.velocity;
-        return steer.limit(configuration.forceLimit);
+        return steer.limit(configuration.forceLimit) * configuration.alignmentWeight;
       }
       return sum;
     }

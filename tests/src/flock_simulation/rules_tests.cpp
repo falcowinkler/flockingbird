@@ -28,6 +28,7 @@ TEST_F(RulesTest, SeparationSimplestTest) {
   parameters.speedLimit = 1;
   parameters.forceLimit = 500;
   parameters.avoidanceRadius = 25;
+  parameters.separationWeight                    = 1;
   Boid boidToUpdate                 = Boid(Vector2D(2.0, 2.0), Vector2D(1.0, 1.0));
   Boid boid2                 = Boid(Vector2D(1.0, 1.0), Vector2D(1.0, 1.0));
   std::vector<Boid> proximity { boid2 };
@@ -58,6 +59,7 @@ TEST_F(RulesTest, SeparationCancellingForcesTest) {
     parameters.speedLimit          = 3;
     parameters.forceLimit          = 500;
     parameters.avoidanceRadius     = 25;
+    parameters.separationWeight    = 1;
     Boid              boidToUpdate = Boid(Vector2D(2.0, 2.0), Vector2D(2.5, 1.5));
     Boid              boid2        = Boid(Vector2D(1.0, 1.0), Vector2D(1.0, 1.0));
     Boid              boid3        = Boid(Vector2D(3.0, 3.0), Vector2D(1.0, 1.0));
@@ -79,6 +81,8 @@ TEST_F(RulesTest, SeparationComplexTest) {
   parameters.speedLimit = 3;
   parameters.forceLimit = 0.1;
   parameters.avoidanceRadius = 25;
+  parameters.separationWeight = 2;
+
   Boid              boidToUpdate = Boid(Vector2D(2.0, 2.0), Vector2D(2.5, 1.5));
   Boid              boid2        = Boid(Vector2D(1.5, 1.5), Vector2D(1.0, 1.0));
   Boid              boid3        = Boid(Vector2D(0.5, 0.5), Vector2D(1.0, 1.0));
@@ -91,7 +95,7 @@ TEST_F(RulesTest, SeparationComplexTest) {
   Vector2D diff2         = Vector2D(1.5, 1.5).normalized() / dist2;
   Vector2D expectedSteer = (diff1 + diff2) / 2;
 
-  Vector2D expectedResult = ((expectedSteer.normalized() * 3) - Vector2D(2.5, 1.5)).limit(0.1);
+  Vector2D expectedResult = ((expectedSteer.normalized() * 3) - Vector2D(2.5, 1.5)).limit(0.1) * 2;
 
   // Act
   Vector2D actualResult = rule(boidToUpdate, proximity, parameters);
@@ -106,6 +110,7 @@ TEST_F(RulesTest, AligmentSimpleTest) {
   FlockSimulationParameters parameters;
   parameters.speedLimit = 3;
   parameters.forceLimit = 0.1;
+  parameters.alignmentWeight = 1;
   Boid              boidToUpdate = Boid(Vector2D(1.0, 1.0), Vector2D(3.0, 3.0));
   Boid              boid2        = Boid(Vector2D(0.0, 0.0), Vector2D(1.0, 1.0));
   std::vector<Boid> proximity { boid2 };
@@ -125,6 +130,7 @@ TEST_F(RulesTest, AlignComplexTest) {
     FlockSimulationParameters parameters;
     parameters.speedLimit          = 3;
     parameters.forceLimit          = 0.1;
+    parameters.alignmentWeight     = 2;
     Boid              boidToUpdate = Boid(Vector2D(2.0, 2.0), Vector2D(2.5, 1.5));
     Boid              boid2        = Boid(Vector2D(1.5, 1.5), Vector2D(1.0, 2.1));
     Boid              boid3        = Boid(Vector2D(0.5, 0.5), Vector2D(3.5, 1.0));
@@ -132,7 +138,7 @@ TEST_F(RulesTest, AlignComplexTest) {
     AlignmentRule     rule;
 
     Vector2D expectedResult
-      = (((Vector2D(4.5, 3.1) / 2).normalized() * 3) - Vector2D(2.5, 1.5)).limit(0.1);
+      = (((Vector2D(4.5, 3.1) / 2).normalized() * 3) - Vector2D(2.5, 1.5)).limit(0.1) * 2;
 
     // Act
     Vector2D actualResult = rule(boidToUpdate, proximity, parameters);
