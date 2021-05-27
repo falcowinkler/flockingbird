@@ -147,3 +147,51 @@ TEST_F(RulesTest, AlignComplexTest) {
     EXPECT_NEAR(expectedResult.x, actualResult.x, 1E-10);
     EXPECT_NEAR(expectedResult.y, actualResult.y, 1E-10);
 }
+
+
+TEST_F(RulesTest, CohesionSimpleTest) {
+    // Arrange Simple test with just one neighbor, and unit parameters
+    FlockSimulationParameters parameters;
+    parameters.speedLimit          = 3;
+    parameters.forceLimit          = 0.1;
+    parameters.cohesionWeight     = 1;
+    Boid              boidToUpdate = Boid(Vector2D(1.0, 1.0), Vector2D(3.0, 3.0));
+    Boid              boid2        = Boid(Vector2D(0.0, 0.0), Vector2D(1.0, 1.0));
+    std::vector<Boid> proximity{boid2};
+    CohesionRule rule;
+
+
+    // Averaged position of other boids is 0, 0
+    Vector2D expectedResult
+      = ((Vector2D(-1, -1).normalized() * 3) - Vector2D(3, 3)).limit(0.1);
+
+    // Act
+    Vector2D actualResult = rule(boidToUpdate, proximity, parameters);
+
+    // Assert
+    EXPECT_NEAR(expectedResult.x, actualResult.x, 1E-10);
+    EXPECT_NEAR(expectedResult.y, actualResult.y, 1E-10);
+}
+
+TEST_F(RulesTest, CohesionComplexTest) {
+    // Arrange Simple test with just one neighbor, and unit parameters
+    FlockSimulationParameters parameters;
+    parameters.speedLimit          = 3;
+    parameters.forceLimit          = 0.1;
+    parameters.cohesionWeight     = 2;
+    Boid              boidToUpdate = Boid(Vector2D(1.0, 1.0), Vector2D(3.0, 3.0));
+    Boid              boid2        = Boid(Vector2D(2.0, 1.0), Vector2D(1.0, 1.0));
+    Boid              boid3        = Boid(Vector2D(3.0, 3.5), Vector2D(1.0, 1.0));
+    std::vector<Boid> proximity{ boid2, boid3 };
+    CohesionRule      rule;
+
+    // Averaged position of other boids is 0, 0
+    Vector2D expectedResult = (((Vector2D(1.5, 1.25)).normalized() * 3) - Vector2D(3, 3)).limit(0.1) * 2;
+
+    // Act
+    Vector2D actualResult = rule(boidToUpdate, proximity, parameters);
+
+    // Assert
+    EXPECT_NEAR(expectedResult.x, actualResult.x, 1E-10);
+    EXPECT_NEAR(expectedResult.y, actualResult.y, 1E-10);
+}

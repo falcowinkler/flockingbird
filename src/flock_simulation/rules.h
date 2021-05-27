@@ -21,8 +21,6 @@ class SeparationRule: public Rule {
                                   FlockSimulationParameters configuration) {
         int count = 0;
         Vector2D steer(0, 0);
-        std::cout << proximity[0] << std::endl;
-        std::cout << proximity[1] << std::endl;
         for (Boid boid : proximity) {
           double d = boidToUpdate.position.distanceTo(boid.position);
           if (d > 0 && d < configuration.avoidanceRadius) {
@@ -65,18 +63,41 @@ public:
     }
 };
 
-namespace Rules {
-const double maxForce = 0.06;
-// Boids try to keep a small distance away from other objects (including other boids).
-inline Vector2D seperation(Boid boidToUpdate, std::vector<Boid> closeProximity) {
-    Vector2D c = Vector2D(0, 0);
-    if (closeProximity.empty()) {
-      return c;
+class CohesionRule: public Rule {
+public:
+    virtual Vector2D operator()(Boid                      boidToUpdate,
+                                std::vector<Boid>         proximity,
+                                FlockSimulationParameters configuration) {
+      Vector2D sum(0, 0);
+      int count = 0;
+      for (Boid boid : proximity) {
+        sum = sum + boid.position;
+        count++;
+      }
+      // Steer towards average position
+      if (count > 0) {
+        Vector2D target = sum / count;
+        Vector2D desired = target - boidToUpdate.position;
+        desired = desired.normalized() * configuration.speedLimit;
+        Vector2D steer = desired - boidToUpdate.velocity;
+        return steer.limit(configuration.forceLimit) * configuration.cohesionWeight;
+      }
+      return sum;
     }
-    for (auto it = closeProximity.begin(); it != closeProximity.end(); it++) {
-      c = c - (it->position - boidToUpdate.position);
-    }
-    return steer(c.normalized(), boidToUpdate.velocity, maxForce);
+    };
+
+    namespace Rules {
+    const double maxForce = 0.06;
+    // Boids try to keep a small distance away from other objects (including other boids).
+    inline Vector2D seperation(Boid boidToUpdate, std::vector<Boid> closeProximity) {
+        Vector2D c = Vector2D(0, 0);
+        if (closeProximity.empty()) {
+            return c;
+        }
+        for (auto it = closeProximity.begin(); it != closeProximity.end(); it++) {
+            c = c - (it->position - boidToUpdate.position);
+        }
+        return steer(c.normalized(), boidToUpdate.velocity, maxForce);
 }
 
 // Boids try to match velocity with near boids.
