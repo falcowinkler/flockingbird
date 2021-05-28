@@ -2,7 +2,6 @@
 #include "gtest/gtest.h"
 #include <vector>
 
-using namespace std;
 
 class RulesTest : public ::testing::Test {
 public:

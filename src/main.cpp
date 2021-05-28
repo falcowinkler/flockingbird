@@ -15,7 +15,7 @@ double speedLimit = 5;
 double forceLimit = 0.03;
 double positionIncrementScalingFactor = 1;
 double avoidanceRadius = 25;
-double visionRange = 50;
+double visionRange = 100;
 double separationWeight = 1.5;
 double alignmentWeight = 1.0;
 double cohesionWeight = 1.0;
@@ -30,7 +30,7 @@ static FlockSimulationParameters flockSimulationParameters(speedLimit,
                                                            cohesionWeight,
                                                            SCREEN_WIDTH,
                                                            SCREEN_HEIGHT);
-static Flock flock(500, SCREEN_WIDTH, SCREEN_HEIGHT);
+static Flock flock(100, SCREEN_WIDTH, SCREEN_HEIGHT);
 static FlockSimulation flockSimulation(flockSimulationParameters, flock, defaultRules);
 static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr,
     gpointer user_data)

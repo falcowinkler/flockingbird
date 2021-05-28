@@ -50,19 +50,3 @@ inline Vector2D operator-(Vector2D a, Vector2D b) {  return Vector2D(a.x - b.x, 
 
 inline Vector2D operator*(Vector2D a, double x) { return Vector2D(a.x * x, a.y * x); }
 inline Vector2D operator/(Vector2D a, double x) { return Vector2D(a.x / x, a.y / x); }
-
-namespace VectorOperations {
-
-  inline Vector2D limitMagnitude(Vector2D steer, double maxForce) {
-    if (steer.magnitude() > maxForce * maxForce) {
-         steer = steer.normalized() * maxForce;
-      }
-      return steer;
-  }
-
-  inline Vector2D steer(Vector2D desired, Vector2D velocity, double maxForce) {
-      Vector2D steer = desired - velocity;
-      steer = limitMagnitude(steer, maxForce);
-      return steer;
-  }
-}

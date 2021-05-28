@@ -3,7 +3,6 @@
 #include "flock_simulation/flock.h"
 
 using namespace nanoflann;
-using namespace std;
 
 const int dim = 2;
 const int maxLeaf = 10;
@@ -20,7 +19,7 @@ protected:
   NanoflannTest() : flock(Flock()),
                     kdTree(dim, flock, KDTreeSingleIndexAdaptorParams(maxLeaf)) {
         // current direction vector not relevant for proximity tests
-        vector<double> dummyDirection = vector<double> {1.0, 1.0};
+    std::vector<double> dummyDirection = std::vector<double> {1.0, 1.0};
 
         Boid  boid1  = Boid(Vector2D(1, 2), Vector2D(1, 1));
 
