@@ -2,6 +2,7 @@
 c++ library for flocking simulations.
 http://www.cs.toronto.edu/~dt/siggraph97-course/cwr87/
 
+<img alt="500 boids" src="https://user-images.githubusercontent.com/8613031/119992710-1cf4be80-bfcb-11eb-9ade-cb75ef882987.gif" width="512">
 
 ### prerequisites
 ```bash
