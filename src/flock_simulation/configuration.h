@@ -9,8 +9,8 @@ struct FlockSimulationParameters {
     double separationWeight;
     double alignmentWeight;
     double cohesionWeight;
-    double maxX;
-    double maxY;
+    double maxX = -1;
+    double maxY = -1;
 
     FlockSimulationParameters() {}
     FlockSimulationParameters(double speedLimit,
