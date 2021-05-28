@@ -11,7 +11,7 @@ const int SCREEN_WIDTH = 1024;
 const int SCREEN_HEIGHT = 600;
 const int REFRESH_INTERVAL_REDRAW = 30;
 
-double speedLimit = 3;
+double speedLimit = 5;
 double forceLimit = 0.03;
 double positionIncrementScalingFactor = 1;
 double avoidanceRadius = 25;
@@ -27,8 +27,10 @@ static FlockSimulationParameters flockSimulationParameters(speedLimit,
                                                            visionRange,
                                                            separationWeight,
                                                            alignmentWeight,
-                                                           cohesionWeight);
-static Flock flock(10, 10, 10);
+                                                           cohesionWeight,
+                                                           SCREEN_WIDTH,
+                                                           SCREEN_HEIGHT);
+static Flock flock(100, SCREEN_WIDTH, SCREEN_HEIGHT);
 static FlockSimulation flockSimulation(flockSimulationParameters, flock, defaultRules);
 static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr,
     gpointer user_data)
@@ -43,17 +45,33 @@ inline double wrap(double val, double max) {
 
 static void do_drawing(cairo_t *cr, GtkWidget *widget)
 {
-    const double dotSize = 10;
-    // std::cout << "draw" << std::endl;
-    cairo_set_source_rgb(cr, 0.69, 0.19, 0);
+    cairo_save(cr);
+    cairo_set_source_rgb(cr, 0, 0, 0);
+    cairo_paint(cr);
+    cairo_restore(cr);
+    cairo_set_source_rgb(cr, 1, 1, 1);
     for (auto it = flock.boids.begin(); it != flock.boids.end(); it ++) {
-      double x = wrap(it->position.x, SCREEN_WIDTH);
-      double y = wrap(it->position.y, SCREEN_HEIGHT);
-      cairo_set_line_width(cr, dotSize);
-      cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND); /* Round dot*/
-      cairo_move_to(cr, x, y);
-      cairo_line_to(cr, x, y); /* a very short line is a dot */
+      double x = it->position.x;
+      double y = it->position.y;
+
+      // Draw triangular boid;
+      Vector2D directionVector((*it).velocity.normalized());
+      double theta = atan2(directionVector.y, directionVector.x) - M_PI/2;
+
+      cairo_set_line_width(cr, 1);
+
+      cairo_save(cr);
+
+      cairo_translate(cr, x, y);
+      cairo_rotate(cr, theta);
+
+      cairo_move_to(cr, -2.5, 0);
+      cairo_line_to(cr, 2.5, 0);
+      cairo_line_to(cr, 0, 10);
+      cairo_line_to(cr, -2.5, 0);
       cairo_stroke(cr);
+
+      cairo_restore(cr);
     }
     cairo_fill(cr);
 }

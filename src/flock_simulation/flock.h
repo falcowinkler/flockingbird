@@ -19,7 +19,7 @@ public:
         std::vector<Boid> result;
         for (int i = 0; i < numBoids; i++) {
             Boid randomBoid(Vector2D(randomInBounds(0, maxX), randomInBounds(0, maxY)),
-                            Vector2D(randomInBounds(1, 50), randomInBounds(1, 50)));
+                            Vector2D(randomInBounds(-1, 1), randomInBounds(-1, 1)));
             result.push_back(randomBoid);
         }
         boids = result;

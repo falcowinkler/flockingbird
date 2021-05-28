@@ -8,6 +8,11 @@ class FlockSimulation {
  private:
      FlockSimulationParameters configuration;
      std::vector<Rule*> rules;
+     double wrap(double val, double max) { return val - max * floor(val / max); }
+     Vector2D wrap(Vector2D position, double maxX, double maxY) {
+        return Vector2D(wrap(position.x, maxX), wrap(position.y, maxY));
+     }
+
  public:
  FlockSimulation(FlockSimulationParameters configurationIn, Flock& flockIn, std::vector<Rule*> rules):
      flock(flockIn), configuration(configurationIn), rules(rules) {}
@@ -24,6 +29,9 @@ class FlockSimulation {
           }
           flock.boids[i].velocity = (flock.boids[i].velocity + velocityUpdate).limit(configuration.speedLimit);
           flock.boids[i].position = flock.boids[i].position + flock.boids[i].velocity;
+          if (configuration.maxX > 0 && configuration.maxY > 0) {
+            flock.boids[i].position = wrap(flock.boids[i].position, configuration.maxX, configuration.maxY);
+          }
     }
   }
 };
