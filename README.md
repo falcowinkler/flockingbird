@@ -56,6 +56,5 @@ Resources used for development
 - http://www.vergenet.net/~conrad/boids/pseudocode.html
 - https://p5js.org/examples/simulate-flocking.html
 
-
 ### Bindings
 - [Swift](https://github.com/falcowinkler/flockingbird-swift) (Work in progress)

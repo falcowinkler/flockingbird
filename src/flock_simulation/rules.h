@@ -5,9 +5,6 @@
 #include <vector>
 #pragma once
 
-using namespace VectorOperations;
-
-
 class Rule {
 public:
     virtual Vector2D

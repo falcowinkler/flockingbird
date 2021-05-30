@@ -4,7 +4,6 @@
 #include "flock_simulation/simulation.h"
 #include "gmock/gmock.h"
 
-using namespace VectorOperations;
 using ::testing::_;
 using ::testing::Return;
 

@@ -52,13 +52,6 @@ TEST_F(VectorOperationsTest, NormalizeNegativeNumbers) {
     EXPECT_NEAR(normalized.magnitude(), 1, 1E-10);
 }
 
-TEST_F(VectorOperationsTest, TestSteer) {
-  Vector2D a = Vector2D(0, 1);
-  Vector2D result = VectorOperations::steer(Vector2D(1, 0), Vector2D(0, 1), 50);
-  EXPECT_EQ(result.x, 1);
-  EXPECT_EQ(result.y, -1);
-}
-
 TEST_F(VectorOperationsTest, TestDistance) {
   Vector2D a = Vector2D(3, 2);
   Vector2D b = Vector2D(9, 7);
