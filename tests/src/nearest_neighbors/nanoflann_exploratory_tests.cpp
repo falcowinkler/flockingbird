@@ -3,6 +3,7 @@
 #include "flock_simulation/flock.h"
 
 using namespace nanoflann;
+using namespace flockingbird;
 
 const int dim = 2;
 const int maxLeaf = 10;

@@ -3,6 +3,9 @@
 #include <vector>
 #include "configuration.h"
 
+using namespace flockingbird;
+
+namespace flockingbird {
 
 class FlockSimulation {
  private:
@@ -35,3 +38,4 @@ class FlockSimulation {
     }
   }
 };
+}

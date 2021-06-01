@@ -1,6 +1,10 @@
+#pragma once
+
 #include "utility/vector_operations.h"
 #include <ostream>
-#pragma once
+
+
+namespace flockingbird {
 
 class Boid {
 public:
@@ -19,4 +23,6 @@ public:
 inline std::ostream& operator<<(std::ostream& outputStream, const Boid& p) {
     outputStream << "(pos" << p.position << ") (dir: " << p.velocity << ")";
     return outputStream;
+}
+
 }

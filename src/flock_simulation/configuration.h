@@ -1,5 +1,6 @@
 #pragma once
 
+namespace flockingbird {
 struct FlockSimulationParameters {
     double speedLimit;
     double forceLimit;
@@ -34,3 +35,4 @@ struct FlockSimulationParameters {
       maxX(maxX),
       maxY(maxY){}
 };
+}  // namespace flockingbird

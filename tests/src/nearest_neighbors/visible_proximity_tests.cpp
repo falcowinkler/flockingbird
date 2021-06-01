@@ -7,6 +7,7 @@
 #include <vector>
 
 using namespace nanoflann;
+using namespace flockingbird;
 
 class VisibleProximityTest : public ::testing::Test {
 public:

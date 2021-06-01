@@ -6,6 +6,8 @@
 
 using ::testing::_;
 using ::testing::Return;
+using namespace flockingbird;
+
 
 class SimulationTest : public ::testing::Test {
 public:

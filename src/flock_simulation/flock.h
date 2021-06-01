@@ -1,8 +1,12 @@
+#pragma once
+
 #include "utility/random_numbers.h"
 #include "utility/vector_operations.h"
 #include "boid.h"
 
-#pragma once
+using namespace flockingbird;
+
+namespace flockingbird {
 class Flock {
 public:
     // constructors
@@ -42,3 +46,4 @@ public:
         return false;
     }
 };
+}  // namespace flockingbird

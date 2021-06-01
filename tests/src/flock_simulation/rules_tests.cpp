@@ -1,7 +1,7 @@
 #include "flock_simulation/rules.h"
 #include "gtest/gtest.h"
 #include <vector>
-
+using namespace flockingbird;
 
 class RulesTest : public ::testing::Test {
 public:

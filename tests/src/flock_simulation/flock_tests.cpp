@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "flock_simulation/flock.h"
 
+using namespace flockingbird;
 
 class FlockingbirdTest : public ::testing::Test {
 

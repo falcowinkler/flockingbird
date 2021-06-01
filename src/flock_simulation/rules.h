@@ -5,6 +5,8 @@
 #include <vector>
 #pragma once
 
+using namespace flockingbird;
+
 class Rule {
 public:
     virtual Vector2D
