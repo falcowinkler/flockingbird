@@ -1,4 +1,4 @@
-#include "flock_simulation/flock.h"
+#include "../flock_simulation/flock.h"
 #include "nanoflann.h"
 #include <iostream>
 #include <ostream>

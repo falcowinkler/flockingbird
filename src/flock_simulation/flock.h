@@ -1,7 +1,7 @@
 #pragma once
 
-#include "utility/random_numbers.h"
-#include "utility/vector_operations.h"
+#include "../utility/random_numbers.h"
+#include "../utility/vector_operations.h"
 #include "boid.h"
 
 using namespace flockingbird;

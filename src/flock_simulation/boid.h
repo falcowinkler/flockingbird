@@ -1,6 +1,6 @@
 #pragma once
 
-#include "utility/vector_operations.h"
+#include "../utility/vector_operations.h"
 #include <ostream>
 
 

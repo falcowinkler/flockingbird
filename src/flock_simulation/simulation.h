@@ -1,5 +1,5 @@
-#include "flock_simulation/rules.h"
-#include "nearest_neighbors/visible_proximity.h"
+#include "rules.h"
+#include "../nearest_neighbors/visible_proximity.h"
 #include <vector>
 #include "configuration.h"
 
