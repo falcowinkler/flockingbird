@@ -3,7 +3,7 @@
  *
  * Copyright 2008-2009  Marius Muja (mariusm@cs.ubc.ca). All rights reserved.
  * Copyright 2008-2009  David G. Lowe (lowe@cs.ubc.ca). All rights reserved.
- * Copyright 2011-2016  Jose Luis Blanco (joseluisblancoc@gmail.com).
+ * Copyright 2011-2021  Jose Luis Blanco (joseluisblancoc@gmail.com).
  *   All rights reserved.
  *
  * THE BSD LICENSE
@@ -225,11 +225,11 @@ public:
 public:
   const DistanceType radius;
 
-  std::vector<std::pair<IndexType, DistanceType> > &m_indices_dists;
+  std::vector<std::pair<IndexType, DistanceType>> &m_indices_dists;
 
   inline RadiusResultSet(
       DistanceType radius_,
-      std::vector<std::pair<IndexType, DistanceType> > &indices_dists)
+      std::vector<std::pair<IndexType, DistanceType>> &indices_dists)
       : radius(radius_), m_indices_dists(indices_dists) {
     init();
   }
@@ -263,7 +263,7 @@ public:
       throw std::runtime_error("Cannot invoke RadiusResultSet::worst_item() on "
                                "an empty list of results.");
     typedef
-        typename std::vector<std::pair<IndexType, DistanceType> >::const_iterator
+        typename std::vector<std::pair<IndexType, DistanceType>>::const_iterator
             DistIt;
     DistIt it = std::max_element(m_indices_dists.begin(), m_indices_dists.end(),
                                  IndexDist_Sorter());
@@ -926,7 +926,6 @@ public:
         ElementType min_elem, max_elem;
         computeMinMax(obj, ind, count, i, min_elem, max_elem);
         ElementType spread = max_elem - min_elem;
-        ;
         if (spread > max_spread) {
           cutfeat = i;
           max_spread = spread;
@@ -1277,7 +1276,7 @@ public:
    */
   size_t
   radiusSearch(const ElementType *query_point, const DistanceType &radius,
-               std::vector<std::pair<IndexType, DistanceType> > &IndicesDists,
+               std::vector<std::pair<IndexType, DistanceType>> &IndicesDists,
                const SearchParams &searchParams) const {
     RadiusResultSet<DistanceType, IndexType> resultSet(radius, IndicesDists);
     const size_t nFound =
@@ -1637,7 +1636,7 @@ public:
    */
   size_t
   radiusSearch(const ElementType *query_point, const DistanceType &radius,
-               std::vector<std::pair<IndexType, DistanceType> > &IndicesDists,
+               std::vector<std::pair<IndexType, DistanceType>> &IndicesDists,
                const SearchParams &searchParams) const {
     RadiusResultSet<DistanceType, IndexType> resultSet(radius, IndicesDists);
     const size_t nFound =
