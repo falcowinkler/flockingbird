@@ -4,6 +4,7 @@
 #include <iostream>
 #include <math.h>
 #include <ostream>
+using namespace flockingbird;
 
 static void do_drawing(cairo_t*, GtkWidget*);
 

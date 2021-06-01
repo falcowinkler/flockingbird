@@ -4,33 +4,33 @@
 #include "../utility/vector_operations.h"
 #include "boid.h"
 
-using namespace flockingbird;
-
 namespace flockingbird {
+
 class Flock {
 public:
     // constructors
-    Flock(const Flock& other) {
+    Flock(const flockingbird::Flock& other) {
         for (auto it = other.boids.begin(); it != other.boids.end(); it++) {
-            boids.push_back(Boid(*it));
+            boids.push_back(flockingbird::Boid(*it));
         }
     }
     Flock() {
-        std::vector<Boid> emptyBoids;
+        std::vector<flockingbird::Boid> emptyBoids;
         boids = emptyBoids;
     }
     Flock(int numBoids, int maxX, int maxY) {
-        std::vector<Boid> result;
+        std::vector<flockingbird::Boid> result;
         for (int i = 0; i < numBoids; i++) {
-            Boid randomBoid(Vector2D(randomInBounds(0, maxX), randomInBounds(0, maxY)),
-                            Vector2D(randomInBounds(-1, 1), randomInBounds(-1, 1)));
+            flockingbird::Boid randomBoid(Vector2D(randomInBounds(0, maxX),
+                                                   randomInBounds(0, maxY)),
+                                          Vector2D(randomInBounds(-1, 1), randomInBounds(-1, 1)));
             result.push_back(randomBoid);
         }
         boids = result;
     }
 
     // members
-    std::vector<Boid> boids;
+    std::vector<flockingbird::Boid> boids;
 
     // nanoflann API
     inline size_t kdtree_get_point_count() const { return boids.size(); }
