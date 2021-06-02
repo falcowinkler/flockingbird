@@ -21,6 +21,9 @@ private:
          : flock(flockIn)
          , configuration(configurationIn)
          , rules(rules) {}
+
+  FlockSimulation(const flockingbird::FlockSimulation& other): flock(other.flock), configuration(other.configuration), rules(other.rules){}
+
      flockingbird::Flock& flock;
      void                 step() {
          VisibleProximity visibleProximity(flock);
