@@ -1,5 +1,5 @@
-#include "../flock_simulation/flock.h"
-#include "nanoflann.h"
+#include "../flock_simulation/flock.hpp"
+#include "nanoflann.hpp"
 #include <iostream>
 #include <ostream>
 #include <vector>

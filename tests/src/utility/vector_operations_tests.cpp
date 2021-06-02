@@ -1,4 +1,4 @@
-#include "utility/vector_operations.h"
+#include "utility/vector_operations.hpp"
 #include "gtest/gtest.h"
 #include <vector>
 

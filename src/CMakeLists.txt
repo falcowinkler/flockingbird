@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.2)
 
-set(HEADER_FILES flockingbird.h)
+set(HEADER_FILES flockingbird)
 
 add_library(flockingbird INTERFACE ${HEADER_FILES})
 

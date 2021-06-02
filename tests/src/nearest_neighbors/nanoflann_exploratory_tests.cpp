@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
-#include "nearest_neighbors/nanoflann.h"
-#include "flock_simulation/flock.h"
+#include "nearest_neighbors/nanoflann.hpp"
+#include "flock_simulation/flock.hpp"
 
 using namespace nanoflann;
 using namespace flockingbird;

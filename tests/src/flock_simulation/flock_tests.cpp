@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "flock_simulation/flock.h"
+#include "flock_simulation/flock.hpp"
 
 using namespace flockingbird;
 

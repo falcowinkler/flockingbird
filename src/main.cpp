@@ -1,4 +1,4 @@
-#include "flockingbird.h"
+#include "flockingbird.hpp"
 #include <cairo.h>
 #include <gtk/gtk.h>
 #include <iostream>

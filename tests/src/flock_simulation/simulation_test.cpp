@@ -1,7 +1,7 @@
-#include "utility/vector_operations.h"
+#include "utility/vector_operations.hpp"
 #include "gtest/gtest.h"
 #include <iostream>
-#include "flock_simulation/simulation.h"
+#include "flock_simulation/simulation.hpp"
 #include "gmock/gmock.h"
 
 using ::testing::_;

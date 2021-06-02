@@ -1,4 +1,4 @@
-#include "flock_simulation/rules.h"
+#include "flock_simulation/rules.hpp"
 #include "gtest/gtest.h"
 #include <vector>
 using namespace flockingbird;

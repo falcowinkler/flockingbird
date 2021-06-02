@@ -1,6 +1,6 @@
-#include "boid.h"
-#include "configuration.h"
-#include "../utility/vector_operations.h"
+#include "boid.hpp"
+#include "configuration.hpp"
+#include "../utility/vector_operations.hpp"
 #include <iostream>
 #include <vector>
 #pragma once

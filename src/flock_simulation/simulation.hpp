@@ -1,7 +1,7 @@
-#include "rules.h"
-#include "../nearest_neighbors/visible_proximity.h"
+#include "rules.hpp"
+#include "../nearest_neighbors/visible_proximity.hpp"
 #include <vector>
-#include "configuration.h"
+#include "configuration.hpp"
 
 namespace flockingbird {
 

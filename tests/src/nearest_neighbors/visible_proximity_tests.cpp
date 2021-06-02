@@ -1,6 +1,6 @@
-#include "nearest_neighbors/nanoflann.h"
-#include "nearest_neighbors/visible_proximity.h"
-#include "utility/random_numbers.h"
+#include "nearest_neighbors/nanoflann.hpp"
+#include "nearest_neighbors/visible_proximity.hpp"
+#include "utility/random_numbers.hpp"
 #include "gtest/gtest.h"
 #include <cmath>
 #include <cstdlib>
