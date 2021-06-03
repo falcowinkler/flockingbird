@@ -10,9 +10,6 @@
 
 class Vector2D {
 public:
-    Vector2D(const Vector2D& other)
-        : x(other.x)
-        , y(other.y) {}
     Vector2D(float xIn, float yIn)
         : x(xIn)
         , y(yIn) {}

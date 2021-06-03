@@ -25,8 +25,6 @@ private:
          , configuration(configurationIn)
          , rules(rules) {}
 
-  FlockSimulation(const flockingbird::FlockSimulation& other): flock(other.flock), configuration(other.configuration), rules(other.rules){}
-
      void                 step() {
          VisibleProximity visibleProximity(flock);
          for (auto it = flock.boids.begin(); it != flock.boids.end(); it++) {

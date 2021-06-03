@@ -9,11 +9,6 @@ namespace flockingbird {
 class Flock {
 public:
     // constructors
-    Flock(const flockingbird::Flock& other) {
-        for (auto it = other.boids.begin(); it != other.boids.end(); it++) {
-            boids.push_back(flockingbird::Boid(*it));
-        }
-    }
     Flock() {
         std::vector<flockingbird::Boid> emptyBoids;
         boids = emptyBoids;
