@@ -34,7 +34,7 @@ static FlockSimulationParameters flockSimulationParameters(speedLimit,
                                                            cohesionWeight,
                                                            SCREEN_WIDTH,
                                                            SCREEN_HEIGHT);
-static Flock flock(100, SCREEN_WIDTH, SCREEN_HEIGHT);
+static Flock flock(1000, SCREEN_WIDTH, SCREEN_HEIGHT);
 static FlockSimulation flockSimulation(flockSimulationParameters, flock, defaultRules);
 static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr,
     gpointer user_data)

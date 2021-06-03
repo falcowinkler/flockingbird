@@ -64,8 +64,6 @@ TEST_F(RulesTest, SeparationCancellingForcesTest) {
     Boid              boid3        = Boid(Vector2D(3.0, 3.0), Vector2D(1.0, 1.0));
     std::vector<Boid> proximity{boid2, boid3};
     SeparationRule    rule;
-    Vector2D          diff1 = Vector2D(0.5, 0.5);
-    Vector2D          diff2 = Vector2D(-0.5, -0.5);
 
     // Act
     Vector2D actualResult = rule(boidToUpdate, proximity, parameters);
