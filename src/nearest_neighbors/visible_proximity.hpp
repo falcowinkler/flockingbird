@@ -28,15 +28,15 @@ public:
 
         Vector2D     boidPosition = flock.boids[index].position;
         const float query_pt[2]  = {boidPosition.x, boidPosition.y};
-        const size_t nMatches     = kdTree.radiusSearch(query_pt, visionRange, ret_matches, params);
+        kdTree.radiusSearch(query_pt, visionRange, ret_matches, params);
 
         // TODO: Maybe block vision in the backwards direction of the bird?
         std::vector<flockingbird::Boid> result;
-        for (int i = 0; i < nMatches; i++) {
-          float distance = ret_matches[i].second;
-          if (distance > 0) {
-            result.push_back(flock.boids[ret_matches[i].first]);
-          }
+        for (auto match: ret_matches) {
+            float distance = match.second;
+            if (distance > 0) {
+                result.push_back(flock.boids[match.first]);
+            }
         }
         return result;
     }

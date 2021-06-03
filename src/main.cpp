@@ -1,9 +1,12 @@
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+
 #include "flockingbird.hpp"
 #include <cairo.h>
 #include <gtk/gtk.h>
 #include <iostream>
 #include <math.h>
 #include <ostream>
+
 using namespace flockingbird;
 
 static void do_drawing(cairo_t*, GtkWidget*);
@@ -31,7 +34,7 @@ static FlockSimulationParameters flockSimulationParameters(speedLimit,
                                                            cohesionWeight,
                                                            SCREEN_WIDTH,
                                                            SCREEN_HEIGHT);
-static Flock flock(500, SCREEN_WIDTH, SCREEN_HEIGHT);
+static Flock flock(100, SCREEN_WIDTH, SCREEN_HEIGHT);
 static FlockSimulation flockSimulation(flockSimulationParameters, flock, defaultRules);
 static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr,
     gpointer user_data)
