@@ -29,21 +29,22 @@ private:
 
      void                 step() {
          VisibleProximity visibleProximity(flock);
-         for (int i = 0; i < flock.boids.size(); i++) {
+         for (auto it = flock.boids.begin(); it != flock.boids.end(); it++) {
+             int i = std::distance(flock.boids.begin(), it);
              Vector2D velocityUpdate(0, 0);
-             for (int r = 0; r < rules.size(); r++) {
-                 Rule*                           rule = rules[r];
+             for (Rule* rule : rules) {
                  std::vector<flockingbird::Boid> proximity
                      = visibleProximity.of(i, pow(configuration.visionRange, 2));
                  velocityUpdate
                      = velocityUpdate + (*rule)(flock.boids[i], proximity, configuration);
              }
-             flock.boids[i].velocity
-                 = (flock.boids[i].velocity + velocityUpdate).limit(configuration.speedLimit);
-             flock.boids[i].position = flock.boids[i].position + flock.boids[i].velocity;
+             Boid * boid = &flock.boids[i];
+             boid->velocity
+                 = (boid->velocity + velocityUpdate).limit(configuration.speedLimit);
+             boid->position = boid->position + boid->velocity;
              if (configuration.maxX > 0 && configuration.maxY > 0) {
-                 flock.boids[i].position
-                     = wrap(flock.boids[i].position, configuration.maxX, configuration.maxY);
+                 boid->position
+                     = wrap(boid->position, configuration.maxX, configuration.maxY);
              }
          }
   }
