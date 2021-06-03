@@ -7,8 +7,11 @@ namespace flockingbird {
 
 class FlockSimulation {
 private:
+    flockingbird::Flock&                    flock;
     flockingbird::FlockSimulationParameters configuration;
     std::vector<Rule*>                      rules;
+
+
     float   wrap(float val, float max) { return val - max * floor(val / max); }
     Vector2D wrap(Vector2D position, float maxX, float maxY) {
         return Vector2D(wrap(position.x, maxX), wrap(position.y, maxY));
@@ -24,7 +27,6 @@ private:
 
   FlockSimulation(const flockingbird::FlockSimulation& other): flock(other.flock), configuration(other.configuration), rules(other.rules){}
 
-     flockingbird::Flock& flock;
      void                 step() {
          VisibleProximity visibleProximity(flock);
          for (int i = 0; i < flock.boids.size(); i++) {

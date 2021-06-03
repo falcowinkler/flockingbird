@@ -12,7 +12,6 @@ typedef KDTreeSingleIndexAdaptor<L2_Simple_Adaptor<float, flockingbird::Flock>, 
 
 class VisibleProximity {
 private:
-    float    visionRange;
     flockingbird::Flock flock;
     kd_tree_t           kdTree;
 

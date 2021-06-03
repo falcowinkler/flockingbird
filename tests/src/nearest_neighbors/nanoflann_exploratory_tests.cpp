@@ -32,9 +32,6 @@ protected:
         flock.boids.push_back(boid2);
         flock.boids.push_back(boid3);
 
-        const int dim = 2;
-        const int maxLeaf = 10;
-
         kdTree.buildIndex();
     };
 

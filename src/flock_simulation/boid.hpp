@@ -9,8 +9,8 @@ namespace flockingbird {
 class Boid {
 public:
     Boid(const Boid& other)
-        : velocity(Vector2D(other.velocity))
-        , position(Vector2D(other.position)) {}
+      : position(Vector2D(other.position)),
+        velocity(Vector2D(other.velocity)) {}
     Boid(Vector2D positionIn, Vector2D velocity)
         : position(positionIn)
         , velocity(velocity) {}
