@@ -4,7 +4,7 @@ http://www.cs.toronto.edu/~dt/siggraph97-course/cwr87/
 
 ![demo500](https://user-images.githubusercontent.com/8613031/119993840-52e67280-bfcc-11eb-8697-ae98e67c4900.gif)
 
-The algorithm uses [kD-Trees](https://github.com/jlblancoc/nanoflann) to calculate the neighbors of a boid, making it possible to simulate up to a thousand boids  in decent framerates.
+The algorithm uses [kD-Trees](https://github.com/jlblancoc/nanoflann) to calculate the neighbors of a boid, making it possible to simulate up to a thousand boids (depending on framerate, compiler optimization level, and processor speed).
 
 ### setup
 (I don't have a windows PC, so just for mac)
