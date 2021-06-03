@@ -7,7 +7,6 @@ namespace flockingbird {
 
 class FlockSimulation {
 private:
-    flockingbird::Flock&                    flock;
     flockingbird::FlockSimulationParameters configuration;
     std::vector<Rule*>                      rules;
 
@@ -18,12 +17,13 @@ private:
      }
 
  public:
+     flockingbird::Flock& flock;
      FlockSimulation(flockingbird::FlockSimulationParameters configurationIn,
                      flockingbird::Flock&                    flockIn,
-                     std::vector<Rule*>                      rules)
-         : flock(flockIn)
-         , configuration(configurationIn)
-         , rules(rules) {}
+                     std::vector<Rule*>                      rules) :
+         configuration(configurationIn),
+         rules(rules),
+         flock(flockIn) {}
 
      void                 step() {
          VisibleProximity visibleProximity(flock);
