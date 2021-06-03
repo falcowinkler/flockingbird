@@ -31,30 +31,30 @@ TEST_F(VectorOperationsTest, VectorMultiplyScalar) {
 }
 
 TEST_F(VectorOperationsTest, Magnitude) {
-  double magnitude = Vector2D(1, 3).magnitude();
-  EXPECT_NEAR(magnitude, sqrt(10), 1E-10);
+  float magnitude = Vector2D(1, 3).magnitude();
+  EXPECT_NEAR(magnitude, sqrt(10), 1E-5);
   magnitude = Vector2D(1, 50).magnitude();
-  EXPECT_NEAR(magnitude, sqrt(2501), 1E-10);
+  EXPECT_NEAR(magnitude, sqrt(2501), 1E-5);
 }
 
 TEST_F(VectorOperationsTest, Normalize) {
     Vector2D normalized = Vector2D(1, 3).normalized();
-    EXPECT_NEAR(normalized.x, 1.0 / sqrt(10), 1E-10);
-    EXPECT_NEAR(normalized.y, 3.0 / sqrt(10), 1E-10);
-    EXPECT_NEAR(normalized.magnitude(), 1, 1E-10);
+    EXPECT_NEAR(normalized.x, 1.0 / sqrt(10), 1E-2);
+    EXPECT_NEAR(normalized.y, 3.0 / sqrt(10), 1E-2);
+    EXPECT_NEAR(normalized.magnitude(), 1, 1E-2);
 }
 
 TEST_F(VectorOperationsTest, NormalizeNegativeNumbers) {
     Vector2D normalized = Vector2D(-1, -1).normalized();
-    EXPECT_NEAR(normalized.x, -1.0 / sqrt(2), 1E-10);
-    EXPECT_NEAR(normalized.y, -1.0 / sqrt(2), 1E-10);
-    EXPECT_NEAR(normalized.magnitude(), 1, 1E-10);
+    EXPECT_NEAR(normalized.x, -1.0 / sqrt(2), 1E-3);
+    EXPECT_NEAR(normalized.y, -1.0 / sqrt(2), 1E-3);
+    EXPECT_NEAR(normalized.magnitude(), 1, 1E-3);
 }
 
 TEST_F(VectorOperationsTest, TestDistance) {
   Vector2D a = Vector2D(3, 2);
   Vector2D b = Vector2D(9, 7);
-  EXPECT_NEAR(a.distanceTo(b), sqrt(61),1E-10);
+  EXPECT_NEAR(a.distanceTo(b), sqrt(61),1E-5);
 }
 
 TEST_F(VectorOperationsTest, TestLimitMagnitude) {
@@ -63,5 +63,5 @@ TEST_F(VectorOperationsTest, TestLimitMagnitude) {
   EXPECT_EQ(a, limited);
 
   limited = a.limit(0.1);
-  EXPECT_NEAR(limited.magnitude(), 0.1, 1E-10);
+  EXPECT_NEAR(limited.magnitude(), 0.1, 1E-3);
 }

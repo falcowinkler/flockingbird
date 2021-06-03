@@ -9,8 +9,8 @@ class FlockSimulation {
 private:
     flockingbird::FlockSimulationParameters configuration;
     std::vector<Rule*>                      rules;
-    double   wrap(double val, double max) { return val - max * floor(val / max); }
-    Vector2D wrap(Vector2D position, double maxX, double maxY) {
+    float   wrap(float val, float max) { return val - max * floor(val / max); }
+    Vector2D wrap(Vector2D position, float maxX, float maxY) {
         return Vector2D(wrap(position.x, maxX), wrap(position.y, maxY));
      }
 

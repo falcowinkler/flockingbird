@@ -48,8 +48,8 @@ TEST_F(RulesTest, SeparationSimplestTest) {
   Vector2D actualResult = rule(boidToUpdate, proximity, parameters);
 
   // Assert
-  EXPECT_NEAR(expectedResult.x, actualResult.x, 1E-10);
-  EXPECT_NEAR(expectedResult.y, actualResult.y, 1E-10);
+  EXPECT_NEAR(expectedResult.x, actualResult.x, 1E-5);
+  EXPECT_NEAR(expectedResult.y, actualResult.y, 1E-5);
 }
 
 TEST_F(RulesTest, SeparationCancellingForcesTest) {
@@ -70,8 +70,8 @@ TEST_F(RulesTest, SeparationCancellingForcesTest) {
     // Act
     Vector2D actualResult = rule(boidToUpdate, proximity, parameters);
     // Assert
-    EXPECT_NEAR(0, actualResult.x, 1E-10);
-    EXPECT_NEAR(0, actualResult.y, 1E-10);
+    EXPECT_NEAR(0, actualResult.x, 1E-5);
+    EXPECT_NEAR(0, actualResult.y, 1E-5);
 }
 
 TEST_F(RulesTest, SeparationComplexTest) {
@@ -88,8 +88,8 @@ TEST_F(RulesTest, SeparationComplexTest) {
   std::vector<Boid> proximity { boid2, boid3 };
   SeparationRule rule;
 
-  double dist1 = Vector2D(2.0, 2.0).distanceTo(Vector2D(1.5, 1.5));
-  double   dist2 = Vector2D(2.0, 2.0).distanceTo(Vector2D(0.5, 0.5));
+  float dist1 = Vector2D(2.0, 2.0).distanceTo(Vector2D(1.5, 1.5));
+  float   dist2 = Vector2D(2.0, 2.0).distanceTo(Vector2D(0.5, 0.5));
   Vector2D diff1         = Vector2D(0.5, 0.5).normalized() / dist1;
   Vector2D diff2         = Vector2D(1.5, 1.5).normalized() / dist2;
   Vector2D expectedSteer = (diff1 + diff2) / 2;
@@ -100,8 +100,8 @@ TEST_F(RulesTest, SeparationComplexTest) {
   Vector2D actualResult = rule(boidToUpdate, proximity, parameters);
 
   // Assert
-  EXPECT_NEAR(expectedResult.x, actualResult.x, 1E-10);
-  EXPECT_NEAR(expectedResult.y, actualResult.y, 1E-10);
+  EXPECT_NEAR(expectedResult.x, actualResult.x, 1E-5);
+  EXPECT_NEAR(expectedResult.y, actualResult.y, 1E-5);
 }
 
 TEST_F(RulesTest, AligmentSimpleTest) {
@@ -121,8 +121,8 @@ TEST_F(RulesTest, AligmentSimpleTest) {
   Vector2D actualResult = rule(boidToUpdate, proximity, parameters);
 
   // Assert
-  EXPECT_NEAR(expectedResult.x, actualResult.x, 1E-10);
-  EXPECT_NEAR(expectedResult.y, actualResult.y, 1E-10);
+  EXPECT_NEAR(expectedResult.x, actualResult.x, 1E-5);
+  EXPECT_NEAR(expectedResult.y, actualResult.y, 1E-5);
 }
 
 TEST_F(RulesTest, AlignComplexTest) {
@@ -143,8 +143,8 @@ TEST_F(RulesTest, AlignComplexTest) {
     Vector2D actualResult = rule(boidToUpdate, proximity, parameters);
 
     // Assert
-    EXPECT_NEAR(expectedResult.x, actualResult.x, 1E-10);
-    EXPECT_NEAR(expectedResult.y, actualResult.y, 1E-10);
+    EXPECT_NEAR(expectedResult.x, actualResult.x, 1E-5);
+    EXPECT_NEAR(expectedResult.y, actualResult.y, 1E-5);
 }
 
 
@@ -168,8 +168,8 @@ TEST_F(RulesTest, CohesionSimpleTest) {
     Vector2D actualResult = rule(boidToUpdate, proximity, parameters);
 
     // Assert
-    EXPECT_NEAR(expectedResult.x, actualResult.x, 1E-10);
-    EXPECT_NEAR(expectedResult.y, actualResult.y, 1E-10);
+    EXPECT_NEAR(expectedResult.x, actualResult.x, 1E-5);
+    EXPECT_NEAR(expectedResult.y, actualResult.y, 1E-5);
 }
 
 TEST_F(RulesTest, CohesionComplexTest) {
@@ -191,6 +191,6 @@ TEST_F(RulesTest, CohesionComplexTest) {
     Vector2D actualResult = rule(boidToUpdate, proximity, parameters);
 
     // Assert
-    EXPECT_NEAR(expectedResult.x, actualResult.x, 1E-10);
-    EXPECT_NEAR(expectedResult.y, actualResult.y, 1E-10);
+    EXPECT_NEAR(expectedResult.x, actualResult.x, 1E-5);
+    EXPECT_NEAR(expectedResult.y, actualResult.y, 1E-5);
 }

@@ -2,28 +2,28 @@
 
 namespace flockingbird {
 struct FlockSimulationParameters {
-    double speedLimit;
-    double forceLimit;
-    double positionIncrementScalingFactor;
-    double avoidanceRadius;
-    double visionRange;
-    double separationWeight;
-    double alignmentWeight;
-    double cohesionWeight;
-    double maxX = -1;
-    double maxY = -1;
+    float speedLimit;
+    float forceLimit;
+    float positionIncrementScalingFactor;
+    float avoidanceRadius;
+    float visionRange;
+    float separationWeight;
+    float alignmentWeight;
+    float cohesionWeight;
+    float maxX = -1;
+    float maxY = -1;
 
     FlockSimulationParameters() {}
-    FlockSimulationParameters(double speedLimit,
-                              double forceLimit,
-                              double positionIncrementScalingFactor,
-                              double avoidanceRadius,
-                              double visionRange,
-                              double separationWeight,
-                              double alignmentWeight,
-                              double cohesionWeight,
-                              double maxX,
-                              double maxY)
+    FlockSimulationParameters(float speedLimit,
+                              float forceLimit,
+                              float positionIncrementScalingFactor,
+                              float avoidanceRadius,
+                              float visionRange,
+                              float separationWeight,
+                              float alignmentWeight,
+                              float cohesionWeight,
+                              float maxX,
+                              float maxY)
         : speedLimit(speedLimit)
         , forceLimit(forceLimit)
         , positionIncrementScalingFactor(positionIncrementScalingFactor)

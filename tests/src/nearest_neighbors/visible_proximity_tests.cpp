@@ -33,7 +33,7 @@ protected:
 
 TEST_F(VisibleProximityTest, FindNearestNeighborsInCloseProximity) {
   VisibleProximity  visibleProximity(flock);
-  const double visionRange = 1;
+  const float visionRange = 1;
   std::vector<Boid> visibleBoids = visibleProximity.of(/*boid at index*/ 0, visionRange);
     EXPECT_EQ(visibleBoids.size(), 1);
 
@@ -45,7 +45,7 @@ TEST_F(VisibleProximityTest, FindNearestNeighborsInCloseProximity) {
 
 TEST_F(VisibleProximityTest, FindsPointsOnEdgeOfSearchRadius) {
     VisibleProximity  visibleProximity(flock);
-    const double      visionRange  = 0.3845; // ((1.5 - 1.01) ^ 2 + (2.5-2.12) ^ 2 == 0.3845)
+    const float      visionRange  = 0.3845 + 1E-5; // ((1.5 - 1.01) ^ 2 + (2.5-2.12) ^ 2 == 0.3845)
     std::vector<Boid> visibleBoids = visibleProximity.of(/*boid at index*/ 0, visionRange);
     EXPECT_EQ(visibleBoids.size(), 1);
 
@@ -57,14 +57,14 @@ TEST_F(VisibleProximityTest, FindsPointsOnEdgeOfSearchRadius) {
 
 TEST_F(VisibleProximityTest, ExcludesPointsOnEdgeOfSearchRadius) {
     VisibleProximity  visibleProximity(flock);
-    const double      visionRange  = 0.3844;  // ((1.5 - 1.01) ^ 2 + (2.5-2.12) ^ 2 == 0.3845)
+    const float      visionRange  = 0.3844;  // ((1.5 - 1.01) ^ 2 + (2.5-2.12) ^ 2 == 0.3845)
     std::vector<Boid> visibleBoids = visibleProximity.of(/*boid at index*/ 0, visionRange);
     EXPECT_EQ(visibleBoids.size(), 0);
 }
 
 TEST_F(VisibleProximityTest, MultipleCallsDontVaryTheResult) {
     VisibleProximity  visibleProximity(flock);
-    const double      visionRange  = 0.3844;  // ((1.5 - 1.01) ^ 2 + (2.5-2.12) ^ 2 == 0.3845)
+    const float      visionRange  = 0.3844;  // ((1.5 - 1.01) ^ 2 + (2.5-2.12) ^ 2 == 0.3845)
 
     visibleProximity.of(/*boid at index*/ 0, visionRange);
     visibleProximity.of(/*boid at index*/ 2, visionRange);
@@ -75,14 +75,14 @@ TEST_F(VisibleProximityTest, MultipleCallsDontVaryTheResult) {
 
 TEST_F(VisibleProximityTest, FindTheWholeFlockWithASufficientVisionRange) {
     VisibleProximity  visibleProximity(flock);
-    const double visionRange = 50;
+    const float visionRange = 50;
     std::vector<Boid> visibleBoids = visibleProximity.of(/*boid at index*/ 2, visionRange);
     EXPECT_EQ(visibleBoids.size(), flock.boids.size() - 1);
 }
 
 TEST_F(VisibleProximityTest, FindsNeigborWithVeryNarrowVision) {
     VisibleProximity  visibleProximity(flock);
-    const double visionRange = 0.2;
+    const float visionRange = 0.2;
     std::vector<Boid> visibleBoids = visibleProximity.of(/*boid at index*/ 2, visionRange);
     EXPECT_EQ(visibleBoids.size(), 1);
 }
@@ -91,7 +91,7 @@ TEST_F(VisibleProximityTest, FindsNeigborWithVeryNarrowVision) {
  * Random tests
  *
  */
-inline double L2_Reference(Vector2D a, Vector2D b) { return pow(a.x - b.x, 2) + pow(a.y - b.y, 2); }
+inline float L2_Reference(Vector2D a, Vector2D b) { return pow(a.x - b.x, 2) + pow(a.y - b.y, 2); }
 
 TEST_F(VisibleProximityTest, RandomTests) {
   int N = 30; // if test runs in under 1 sec, we can reach this fps
@@ -103,7 +103,7 @@ TEST_F(VisibleProximityTest, RandomTests) {
             boids.push_back(
                 Boid(Vector2D(randomInBounds(0, 10), randomInBounds(0, 10)), Vector2D(0, 0)));
         }
-        double visionRange = randomInBounds(0, 10);
+        float visionRange = randomInBounds(0, 10);
         Flock flock = Flock();
         flock.boids = boids;
 

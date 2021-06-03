@@ -21,7 +21,7 @@ class SeparationRule: public Rule {
           int      count = 0;
           Vector2D steer(0, 0);
           for (flockingbird::Boid boid : proximity) {
-              double d = boidToUpdate.position.distanceTo(boid.position);
+              float d = boidToUpdate.position.distanceTo(boid.position);
               if (d > 0 && d < configuration.avoidanceRadius) {
                   Vector2D diff = (boidToUpdate.position - boid.position).normalized() / d;
                   steer         = steer + diff;

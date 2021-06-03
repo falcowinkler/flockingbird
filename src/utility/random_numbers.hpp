@@ -1,7 +1,7 @@
 #pragma once
 #include <random>
 
-inline double randomInBounds(double fMin, double fMax) {
-    double f = (double)rand() / RAND_MAX;
+inline float randomInBounds(float fMin, float fMax) {
+    float f = (float)rand() / static_cast<float>(RAND_MAX);
     return fMin + f * (fMax - fMin);
 }

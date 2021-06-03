@@ -36,7 +36,7 @@ public:
     // nanoflann API
     inline size_t kdtree_get_point_count() const { return boids.size(); }
 
-    inline double kdtree_get_pt(const size_t idx, const size_t dim) const {
+    inline float kdtree_get_pt(const size_t idx, const size_t dim) const {
         if (dim == 0)
             return boids[idx].position.x;
         else
