@@ -38,7 +38,6 @@ target_link_libraries(
   flockingbird
   ${CAIRO_LIBRARIES}
   ${GTK3_LIBRARIES}
-  
 )
 
 install(TARGETS flockingbird_demo DESTINATION ${FLOCKINGBIRD_INSTALL_BUILD_DIR})

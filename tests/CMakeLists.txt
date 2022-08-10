@@ -11,7 +11,8 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-# TODO: Can we recursively add all tests?
+# TODO: Can we recursively add all tests? -
+# Check for cmake function to discover all files?
 set(SOURCE_FILES
   src/nearest_neighbors/nanoflann_exploratory_tests.cpp
   src/nearest_neighbors/visible_proximity_tests.cpp

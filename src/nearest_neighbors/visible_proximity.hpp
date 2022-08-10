@@ -8,7 +8,10 @@ using namespace nanoflann;
 const int dim     = 2;
 const int maxLeaf = 10;
 
-typedef KDTreeSingleIndexAdaptor<L2_Simple_Adaptor<float, flockingbird::Flock>, flockingbird::Flock, dim> kd_tree_t;
+typedef KDTreeSingleIndexAdaptor<L2_Simple_Adaptor<float, flockingbird::Flock>,
+                                 flockingbird::Flock,
+                                 dim>
+    kd_tree_t;
 
 class VisibleProximity {
 private:
@@ -26,13 +29,13 @@ public:
         params.sorted = false;
         std::vector<std::pair<size_t, float>> ret_matches;
 
-        Vector2D     boidPosition = flock.boids[index].position;
+        Vector2D    boidPosition = flock.boids[index].position;
         const float query_pt[2]  = {boidPosition.x, boidPosition.y};
         kdTree.radiusSearch(query_pt, visionRange, ret_matches, params);
 
-        // TODO: Maybe block vision in the backwards direction of the bird?
+        // TODO: Block vision in the backwards direction of the bird
         std::vector<flockingbird::Boid> result;
-        for (auto match: ret_matches) {
+        for (auto match : ret_matches) {
             float distance = match.second;
             if (distance > 0) {
                 result.push_back(flock.boids[match.first]);
