@@ -31,8 +31,8 @@ struct FlockSimulationParameters {
         , visionRange(visionRange)
         , separationWeight(separationWeight)
         , alignmentWeight(alignmentWeight)
-      , cohesionWeight(cohesionWeight),
-      maxX(maxX),
-      maxY(maxY){}
+        , cohesionWeight(cohesionWeight)
+        , maxX(maxX)
+        , maxY(maxY) {}
 };
 }  // namespace flockingbird

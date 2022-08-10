@@ -13,8 +13,9 @@ public:
         std::vector<flockingbird::Boid> emptyBoids;
         boids = emptyBoids;
     }
-  Flock(std::vector<flockingbird::Boid> boids): boids(boids) {}
-    Flock(int numBoids, int maxX, int maxY) {
+    Flock(std::vector<flockingbird::Boid> boids)
+        : boids(boids) {}
+    Flock(int numBoids, float maxX, float maxY) {
         std::vector<flockingbird::Boid> result;
         for (int i = 0; i < numBoids; i++) {
             flockingbird::Boid randomBoid(Vector2D(randomInBounds(0, maxX),
