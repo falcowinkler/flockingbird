@@ -5,7 +5,7 @@
 #include <vector>
 using namespace nanoflann;
 
-const int dim     = 2;
+const int dim     = 3;
 const int maxLeaf = 10;
 
 typedef KDTreeSingleIndexAdaptor<L2_Simple_Adaptor<float, flockingbird::Flock>,
@@ -29,8 +29,8 @@ public:
         params.sorted = false;
         std::vector<std::pair<size_t, float>> ret_matches;
 
-        Vector2D    boidPosition = flock.boids[index].position;
-        const float query_pt[2]  = {boidPosition.x, boidPosition.y};
+        Vector3D    boidPosition = flock.boids[index].position;
+        const float query_pt[3]  = {boidPosition.x, boidPosition.y,boidPosition.z};
         kdTree.radiusSearch(query_pt, visionRange, ret_matches, params);
 
         // TODO: Block vision in the backwards direction of the bird

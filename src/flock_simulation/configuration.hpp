@@ -12,6 +12,7 @@ struct FlockSimulationParameters {
     float cohesionWeight;
     float maxX = -1;
     float maxY = -1;
+    float maxZ = -1;
 
     FlockSimulationParameters() {}
     FlockSimulationParameters(float speedLimit,
@@ -23,7 +24,8 @@ struct FlockSimulationParameters {
                               float alignmentWeight,
                               float cohesionWeight,
                               float maxX,
-                              float maxY)
+                              float maxY,
+                              float maxZ)
         : speedLimit(speedLimit)
         , forceLimit(forceLimit)
         , positionIncrementScalingFactor(positionIncrementScalingFactor)
@@ -33,6 +35,7 @@ struct FlockSimulationParameters {
         , alignmentWeight(alignmentWeight)
         , cohesionWeight(cohesionWeight)
         , maxX(maxX)
-        , maxY(maxY) {}
+        , maxY(maxY)
+        , maxZ(maxZ) {}
 };
 }  // namespace flockingbird

@@ -15,12 +15,15 @@ public:
     }
     Flock(std::vector<flockingbird::Boid> boids)
         : boids(boids) {}
-    Flock(int numBoids, float maxX, float maxY) {
+    Flock(int numBoids, float maxX, float maxY, float maxZ) {
         std::vector<flockingbird::Boid> result;
         for (int i = 0; i < numBoids; i++) {
-            flockingbird::Boid randomBoid(Vector2D(randomInBounds(0, maxX),
-                                                   randomInBounds(0, maxY)),
-                                          Vector2D(randomInBounds(-1, 1), randomInBounds(-1, 1)));
+            flockingbird::Boid randomBoid(Vector3D(randomInBounds(0, maxX),
+                                                   randomInBounds(0, maxY),
+                                                   randomInBounds(0, maxZ)),
+                                          Vector3D(randomInBounds(-1, 1),
+                                                   randomInBounds(-1, 1),
+                                                   randomInBounds(-1, 1)));
             result.push_back(randomBoid);
         }
         boids = result;
@@ -35,8 +38,10 @@ public:
     inline float kdtree_get_pt(const size_t idx, const size_t dim) const {
         if (dim == 0)
             return boids[idx].position.x;
-        else
+        else if(dim == 1)
             return boids[idx].position.y;
+        else
+        return boids[idx].position.z;
     }
     template <class BBOX>
     bool kdtree_get_bbox(BBOX& /* bb */) const {
