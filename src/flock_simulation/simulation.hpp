@@ -10,6 +10,7 @@ private:
     flockingbird::FlockSimulationParameters configuration;
     std::vector<Rule*>                      rules;
     std::vector<Vector3D>                   viewDirections;
+    std::vector<Vector3D>                   dirs;
 
     float wrap(float val, float max) {
         double newval = (double)val;
@@ -39,6 +40,8 @@ public:
         , rules(rules)
         , flock(flockIn) {}
 
+    const int numViewDirections = 300;
+
     // Simulation function
     void step(float dt) {
         VisibleProximity visibleProximity(flock);
@@ -56,14 +59,19 @@ public:
             Boid* boid     = &flock.boids[i];
             boid->velocity = boid->velocity + acceleration * dt;
             float    speed = boid->velocity.magnitude();
-            Vector3D dir   = boid->velocity / speed;
-            speed          = std::clamp(speed, 3.0f, configuration.speedLimit);
+            Vector3D dir   = boid->velocity.normalized();
+            speed          = std::clamp(speed, 2.0f, configuration.speedLimit);
             boid->velocity = dir * speed;
-            boid->position = boid->position + boid->velocity;
 
-            // Check if next update is out of bound
-            boid->position = wrap(boid->position, configuration.maxX, configuration.maxY, configuration.maxZ);
+            boid->position   = boid->position + boid->velocity;
+
+           //   std::cout << "postion :" << boid->position << std::endl;
+            // Check if next update is out of bound //replace with collision detection
+            // boid->position = wrap(boid->position, configuration.maxX, configuration.maxY,
+            // configuration.maxZ);
         }
     }
+
+    std::vector<Vector3D> getDirections() { return dirs; }
 };
 }  // namespace flockingbird

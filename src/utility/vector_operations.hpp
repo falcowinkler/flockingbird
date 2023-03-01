@@ -85,6 +85,8 @@ public:
         return *this;
     }
 
+    friend float         dot(Vector3D a, Vector3D b);
+    friend Vector3D      cross(Vector3D a, Vector3D b);
     friend std::ostream& operator<<(std::ostream& outputStream, const Vector3D& p);
 };
 
@@ -93,16 +95,36 @@ inline std::ostream& operator<<(std::ostream& outputStream, const Vector3D& p) {
     return outputStream;
 }
 
+inline float dot(Vector3D a, Vector3D b) { return a.x * b.x + a.y * b.y + a.z * b.z; }
+
+inline Vector3D cross(Vector3D a, Vector3D b) {
+
+    Vector3D res;
+    res.x = a.y * b.z - a.z * b.y;
+    res.y = a.z * b.x - a.x * b.z;
+    res.z = a.x * b.y - a.y * b.x;
+
+    return res;
+}
+
 // 3d overloads
 inline bool operator==(Vector3D a, Vector3D b) { return a.x == b.x && a.y == b.z && a.y == b.z; }
 
 inline Vector3D operator+(Vector3D a, Vector3D b) {
     return Vector3D(a.x + b.x, a.y + b.y, a.z + b.z);
 }
+inline Vector3D operator+(float n, Vector3D a) {
+    return Vector3D(a.x + n, a.y + n, a.z + n);
+}
 
 inline Vector3D operator-(Vector3D a, Vector3D b) {
     return Vector3D(a.x - b.x, a.y - b.y, a.z - b.z);
 }
 
+inline Vector3D operator-(float n, Vector3D a) {
+    return Vector3D(a.x - n, a.y - n, a.z - n);
+}
+
 inline Vector3D operator*(Vector3D a, float x) { return Vector3D(a.x * x, a.y * x, a.z * x); }
 inline Vector3D operator/(Vector3D a, float x) { return Vector3D(a.x / x, a.y / x, a.z / x); }
+inline Vector3D operator/(float x,Vector3D a) { return Vector3D(a.x / x, a.y / x, a.z / x); }

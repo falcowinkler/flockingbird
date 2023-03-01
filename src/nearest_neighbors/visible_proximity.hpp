@@ -37,7 +37,8 @@ public:
         std::vector<flockingbird::Boid> result;
         for (auto match : ret_matches) {
             float distance = match.second;
-            if (distance > 0) {
+           
+            if (distance > 0 && distance < visionRange) {
                 result.push_back(flock.boids[match.first]);
             }
         }
