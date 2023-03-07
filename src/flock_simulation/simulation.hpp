@@ -56,16 +56,22 @@ public:
                 acceleration = acceleration + (*rule)(flock.boids[i], proximity, configuration);
             }
 
-            Boid* boid     = &flock.boids[i];
+            Boid* boid = &flock.boids[i];
+            if (configuration.twoD) {
+                boid->position.z = 0;
+                boid->velocity.z = 0;
+                acceleration.z = 0;
+            }
+
             boid->velocity = boid->velocity + acceleration * dt;
             float    speed = boid->velocity.magnitude();
             Vector3D dir   = boid->velocity.normalized();
             speed          = std::clamp(speed, 2.0f, configuration.speedLimit);
             boid->velocity = dir * speed;
 
-            boid->position   = boid->position + boid->velocity;
+            boid->position = boid->position + boid->velocity;
 
-           //   std::cout << "postion :" << boid->position << std::endl;
+            //   std::cout << "postion :" << boid->position << std::endl;
             // Check if next update is out of bound //replace with collision detection
             // boid->position = wrap(boid->position, configuration.maxX, configuration.maxY,
             // configuration.maxZ);

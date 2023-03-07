@@ -52,19 +52,23 @@ class CollisionRule : public Rule {
         Vector3D              steer        = Vector3D{0.0, 0.0, 0.0};
         float                 t            = 0;
         float                 furthestDist = 0;
-        bool hit = detectCollision(boidToUpdate.position, boidToUpdate.velocity, t, configuration);
-        if (hit && t < 5) {
-           // std::cout << "velocity t " << t << std::endl;
+        bool  hit = rayCast(boidToUpdate.position, boidToUpdate.velocity, t, configuration);
+        float distanceToWall = t;
+
+        if (hit && distanceToWall <= configuration.avoidanceRadius*3) {
+            // std::cout << "velocity t " << t << std::endl;
             for (Vector3D viewRay : viewRays) {
-                bool hit = detectCollision(boidToUpdate.position, viewRay, t, configuration);
-                
-              //  std::cout << "viewRay t " << t << std::endl;
+                if(configuration.twoD){
+                    viewRay.z = 0;
+                }
+                bool hit = rayCast(boidToUpdate.position, viewRay, t, configuration);
 
                 if (t > furthestDist) {
                     steer        = viewRay;
                     furthestDist = t;
                 }
-                if(!hit && furthestDist >= 100) break;
+                if (!hit && furthestDist >= configuration.avoidanceRadius*3)
+                    break;
             }
         }
 
@@ -76,13 +80,13 @@ class CollisionRule : public Rule {
         return steer;
     };
 
-    bool detectCollision(Vector3D                                startPos,
-                         Vector3D                                dir,
-                         float&                                  t,
-                         flockingbird::FlockSimulationParameters configuration) {
+    bool rayCast(Vector3D                                startPos,
+                 Vector3D                                dir,
+                 float&                                  t,
+                 flockingbird::FlockSimulationParameters configuration) {
         // r.dir is unit direction vector of ray
         dir = dir.normalized();
-        //  startPos = startPos.normalized();
+
         float tmin, tmax, tymin, tymax, tzmin, tzmax;
 
         int sign[3];
@@ -105,19 +109,30 @@ class CollisionRule : public Rule {
         tymin = (bounds[sign[1]].y - startPos.y) * invdir.y;
         tymax = (bounds[1 - sign[1]].y - startPos.y) * invdir.y;
 
-        // if ((tmin > tymax) || (tymin > tmax))
-        //  return false;
+        if ((tmin > tymax) || (tymin > tmax))
+            return false;
 
         if (tymin > tmin)
             tmin = tymin;
         if (tymax < tmax)
             tmax = tymax;
 
+        if (configuration.twoD) {
+            t = tmin;
+
+            if (t < 0) {
+                t = tmax;
+                if (t < 0)
+                    return false;
+            }
+        }
+
+        //3D
         tzmin = (bounds[sign[2]].z - startPos.z) * invdir.z;
         tzmax = (bounds[1 - sign[2]].z - startPos.z) * invdir.z;
 
-        // if ((tmin > tzmax) || (tzmin > tmax))
-        //    return false;
+        if ((tmin > tzmax) || (tzmin > tmax))
+            return false;
 
         if (tzmin > tmin)
             tmin = tzmin;
