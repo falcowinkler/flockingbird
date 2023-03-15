@@ -55,6 +55,8 @@ class CollisionRule : public Rule {
         bool  hit = rayCast(boidToUpdate.position, boidToUpdate.velocity, t, configuration);
         float distanceToWall = t;
 
+        //Disable Until later notice
+        return steer;
         if (hit && distanceToWall <= configuration.avoidanceRadius*3) {
             // std::cout << "velocity t " << t << std::endl;
             for (Vector3D viewRay : viewRays) {

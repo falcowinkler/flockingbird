@@ -60,8 +60,19 @@ public:
             if (configuration.twoD) {
                 boid->position.z = 0;
                 boid->velocity.z = 0;
-                acceleration.z = 0;
+                acceleration.z   = 0;
             }
+
+            Vector3D targetAcceleration = {0, 0, 0};
+            if (configuration.targetPosition.x != -1 && configuration.targetPosition.y != -1
+                && configuration.targetPosition.z != -1) {
+                Vector3D offsetToTarget = (configuration.targetPosition - boid->position);
+                targetAcceleration
+                    = offsetToTarget.normalized() * configuration.speedLimit - boid->velocity;
+                targetAcceleration = targetAcceleration.limit(configuration.forceLimit)
+                    * configuration.separationWeight;
+            }
+            acceleration   = acceleration + targetAcceleration;
 
             boid->velocity = boid->velocity + acceleration * dt;
             float    speed = boid->velocity.magnitude();
