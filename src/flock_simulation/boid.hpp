@@ -3,18 +3,20 @@
 #include "../utility/vector_operations.hpp"
 #include <ostream>
 
-
 namespace flockingbird {
 
 class Boid {
 public:
-    Boid(Vector2D positionIn, Vector2D velocity)
+    Boid(Vector3D positionIn, Vector3D velocity)
         : position(positionIn)
         , velocity(velocity) {}
-    Vector2D position;
-    Vector2D velocity;
+    Vector3D position;
+    Vector3D velocity;
 
     friend std::ostream& operator<<(std::ostream& outputStream, const Boid& p);
+
+private:
+
 };
 
 inline std::ostream& operator<<(std::ostream& outputStream, const Boid& p) {
@@ -22,4 +24,4 @@ inline std::ostream& operator<<(std::ostream& outputStream, const Boid& p) {
     return outputStream;
 }
 
-}
+}  // namespace flockingbird
