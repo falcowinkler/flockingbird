@@ -57,13 +57,14 @@ class CollisionRule : public Rule {
 
         //Disable Until later notice
         return steer;
+
         if (hit && distanceToWall <= configuration.avoidanceRadius*3) {
             // std::cout << "velocity t " << t << std::endl;
             for (Vector3D viewRay : viewRays) {
                 if(configuration.twoD){
                     viewRay.z = 0;
                 }
-                bool hit = rayCast(boidToUpdate.position, viewRay, t, configuration);
+                hit = rayCast(boidToUpdate.position, viewRay, t, configuration);
 
                 if (t > furthestDist) {
                     steer        = viewRay;
@@ -80,8 +81,11 @@ class CollisionRule : public Rule {
             return steer.limit(configuration.forceLimit) * configuration.avoidanceWeight;
         }
         return steer;
+
     };
 
+    //Raycasting algorithm 
+    //Bounding box ray intersection
     bool rayCast(Vector3D                                startPos,
                  Vector3D                                dir,
                  float&                                  t,

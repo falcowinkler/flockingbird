@@ -33,6 +33,8 @@ private:
 
 public:
     flockingbird::Flock& flock;
+
+    FlockSimulation() = default;
     FlockSimulation(flockingbird::FlockSimulationParameters configurationIn,
                     flockingbird::Flock&                    flockIn,
                     std::vector<Rule*>                      rules)
@@ -40,6 +42,17 @@ public:
         , rules(rules)
         , flock(flockIn) {}
 
+    // A simplistic implementation of operator= (see better implementation below)
+    /*FlockSimulation& FlockSimulation::operator=(const FlockSimulation& flockSimIn) {
+         do the copy
+        configuration = flockSimIn.configuration;
+        flock         = flockSimIn.flock;
+        rules         = flockSimIn.rules;
+         return the existing object so we can chain this operator
+        return *this;
+    }*/
+
+    //variable to declare amount of rays to calculate
     const int numViewDirections = 300;
 
     // Simulation function
@@ -57,6 +70,7 @@ public:
             }
 
             Boid* boid = &flock.boids[i];
+            //Two or three dimensions
             if (configuration.twoD) {
                 boid->position.z = 0;
                 boid->velocity.z = 0;
@@ -70,9 +84,9 @@ public:
                 targetAcceleration
                     = offsetToTarget.normalized() * configuration.speedLimit - boid->velocity;
                 targetAcceleration = targetAcceleration.limit(configuration.forceLimit)
-                    * configuration.separationWeight;
+                    * configuration.directionWeight;
             }
-            acceleration   = acceleration + targetAcceleration;
+            acceleration = acceleration + targetAcceleration;
 
             boid->velocity = boid->velocity + acceleration * dt;
             float    speed = boid->velocity.magnitude();
@@ -82,10 +96,9 @@ public:
 
             boid->position = boid->position + boid->velocity;
 
-            //   std::cout << "postion :" << boid->position << std::endl;
-            // Check if next update is out of bound //replace with collision detection
-            // boid->position = wrap(boid->position, configuration.maxX, configuration.maxY,
-            // configuration.maxZ);
+            // Check if next update is out of bound 
+            boid->position
+                = wrap(boid->position, configuration.maxX, configuration.maxY, configuration.maxZ);
         }
     }
 

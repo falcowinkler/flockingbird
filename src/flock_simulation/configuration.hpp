@@ -49,5 +49,6 @@ struct FlockSimulationParameters {
         , maxY(maxY)
         , maxZ(maxZ)
         , targetPosition(TargetPos) {}
+
 };
 }  // namespace flockingbird
