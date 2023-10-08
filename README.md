@@ -23,7 +23,7 @@ brew install cairo
 brew install gtk+3
 ```
 
-NOTE: i had to 
+NOTE: i had to
 ```bash
 export LDFLAGS="-L/usr/local/Cellar/cairo/1.16.0_5/lib $LDFLAGS"
 ```

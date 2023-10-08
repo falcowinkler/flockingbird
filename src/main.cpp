@@ -1,3 +1,4 @@
+#include "utility/vector_operations.hpp"
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 
 #include "flockingbird.hpp"
@@ -23,6 +24,9 @@ double visionRange                    = 100;
 double separationWeight               = 1.5;
 double alignmentWeight                = 1.0;
 double cohesionWeight                 = 1.0;
+double avoidanceWeight                = 1.0;
+double dirWeight                      = 1.0;
+bool twoDimensions = true;
 int    numberOfBoids                  = 100;
 
 static FlockSimulationParameters flockSimulationParameters(speedLimit,
@@ -33,9 +37,15 @@ static FlockSimulationParameters flockSimulationParameters(speedLimit,
                                                            separationWeight,
                                                            alignmentWeight,
                                                            cohesionWeight,
-                                                           SCREEN_WIDTH,
-                                                           SCREEN_HEIGHT);
-static Flock                     flock(numberOfBoids, SCREEN_WIDTH, SCREEN_HEIGHT);
+                                                           avoidanceWeight,
+                                                           dirWeight,
+                                                           twoDimensions,
+                                                           1024,
+                                                           1024,
+                                                           1024,
+                                                           Vector3D(0, 0, 0)
+                                                           );
+static Flock                     flock(numberOfBoids, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
 static FlockSimulation           flockSimulation(flockSimulationParameters, flock, defaultRules);
 static gboolean                  on_draw_event(GtkWidget* widget, cairo_t* cr, gpointer user_data) {
     do_drawing(cr, widget);
@@ -55,7 +65,7 @@ static void do_drawing(cairo_t* cr, GtkWidget* widget) {
         double y = it->position.y;
 
         // Draw triangular boid;
-        Vector2D directionVector((*it).velocity.normalized());
+        Vector3D directionVector((*it).velocity.normalized());
         double   theta = atan2(directionVector.y, directionVector.x) - M_PI / 2;
 
         cairo_set_line_width(cr, 1);

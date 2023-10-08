@@ -185,7 +185,7 @@ public:
         Vector3D sum(0, 0, 0);
         int      count = 0;
         for (flockingbird::Boid boid : proximity) {
-            sum = sum + boid.velocity.normalized();
+            sum = sum + boid.velocity;
             count++;
         }
         if (count > 0) {

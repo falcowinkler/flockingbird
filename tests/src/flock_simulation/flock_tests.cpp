@@ -12,7 +12,7 @@ protected:
 };
 
 TEST_F(FlockingbirdTest, RandomInit) {
-    Flock flock(10, 10, 10);
+    Flock flock(10, 10, 10, 0);
     EXPECT_EQ(flock.boids.size(), 10);
     for (int i = 0; i < 10; i++) {
         Boid boid = flock.boids[i];
@@ -31,7 +31,7 @@ TEST_F(FlockingbirdTest, CopyConstructors) {
     const int N        = 1000;
     const int numTests = 10;
     for (int testRun = 0; testRun < numTests; testRun++) {
-        Flock flock(N, 100, 100);
+      Flock flock(N, 100, 100, 0);
         Flock copy(flock);
         for (int i = 0; i < N; i++) {
             EXPECT_EQ(flock.boids[i].position.x, copy.boids[i].position.x);

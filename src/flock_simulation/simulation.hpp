@@ -1,6 +1,7 @@
 #include "../nearest_neighbors/visible_proximity.hpp"
 #include "configuration.hpp"
 #include "rules.hpp"
+#include <iostream>
 #include <vector>
 
 namespace flockingbird {
@@ -12,20 +13,7 @@ private:
     std::vector<Vector3D>                   viewDirections;
     std::vector<Vector3D>                   dirs;
 
-    float wrap(float val, float max) {
-        double newval = (double)val;
-        double newMax = (double)max;
-        if (val >= max) {
-            return val - max + configuration.avoidanceRadius;
-        }
-        if (val < 0) {
-            return val + max - configuration.avoidanceRadius;
-        } else
-
-        {
-            return val;
-        }
-    }
+    float wrap(float val, float max) { return val - max * floor(val / max); }
 
     Vector3D wrap(Vector3D position, float maxX, float maxY, float maxZ) {
         return Vector3D(wrap(position.x, maxX), wrap(position.y, maxY), wrap(position.z, maxZ));
@@ -56,7 +44,7 @@ public:
     const int numViewDirections = 300;
 
     // Simulation function
-    void step(float dt) {
+    void step() {
         VisibleProximity visibleProximity(flock);
         for (auto it = flock.boids.begin(); it != flock.boids.end(); it++) {
             int i = std::distance(flock.boids.begin(), it);
@@ -78,17 +66,15 @@ public:
             }
 
             Vector3D targetAcceleration = {0, 0, 0};
-            if (configuration.targetPosition.x != -1 && configuration.targetPosition.y != -1
-                && configuration.targetPosition.z != -1) {
-                Vector3D offsetToTarget = (configuration.targetPosition - boid->position);
+            if (configuration.targetPosition.has_value()) {
+                Vector3D offsetToTarget = (configuration.targetPosition.value() - boid->position);
                 targetAcceleration
                     = offsetToTarget.normalized() * configuration.speedLimit - boid->velocity;
                 targetAcceleration = targetAcceleration.limit(configuration.forceLimit)
                     * configuration.directionWeight;
             }
             acceleration = acceleration + targetAcceleration;
-
-            boid->velocity = boid->velocity + acceleration * dt;
+            boid->velocity = boid->velocity + acceleration;
             float    speed = boid->velocity.magnitude();
             Vector3D dir   = boid->velocity.normalized();
             speed          = std::clamp(speed, 2.0f, configuration.speedLimit);
@@ -96,9 +82,10 @@ public:
 
             boid->position = boid->position + boid->velocity;
 
-            // Check if next update is out of bound 
+            // Check if next update is out of bound
             boid->position
                 = wrap(boid->position, configuration.maxX, configuration.maxY, configuration.maxZ);
+  
         }
     }
 

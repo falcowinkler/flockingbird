@@ -1,4 +1,5 @@
 #pragma once
+#import "utility/vector_operations.hpp"
 
 namespace flockingbird {
 struct FlockSimulationParameters {
@@ -16,24 +17,24 @@ struct FlockSimulationParameters {
     float    maxX = -1;
     float    maxY = -1;
     float    maxZ = -1;
-    Vector3D targetPosition;
+    std::optional<Vector3D> targetPosition;
 
     FlockSimulationParameters() {}
-    FlockSimulationParameters(float    speedLimit,
-                              float    forceLimit,
-                              float    positionIncrementScalingFactor,
-                              float    avoidanceRadius,
-                              float    visionRange,
-                              float    separationWeight,
-                              float    alignmentWeight,
-                              float    cohesionWeight,
-                              float    avoidanceWeight,
-                              float    dirWeight,
-                              bool     twoDimensions,
-                              float    maxX,
-                              float    maxY,
-                              float    maxZ,
-                              Vector3D TargetPos)
+    FlockSimulationParameters(float                   speedLimit,
+                              float                   forceLimit,
+                              float                   positionIncrementScalingFactor,
+                              float                   avoidanceRadius,
+                              float                   visionRange,
+                              float                   separationWeight,
+                              float                   alignmentWeight,
+                              float                   cohesionWeight,
+                              float                   avoidanceWeight,
+                              float                   dirWeight,
+                              bool                    twoDimensions,
+                              float                   maxX,
+                              float                   maxY,
+                              float                   maxZ,
+                              std::optional<Vector3D> TargetPos)
         : speedLimit(speedLimit)
         , forceLimit(forceLimit)
         , positionIncrementScalingFactor(positionIncrementScalingFactor)
@@ -49,6 +50,5 @@ struct FlockSimulationParameters {
         , maxY(maxY)
         , maxZ(maxZ)
         , targetPosition(TargetPos) {}
-
 };
 }  // namespace flockingbird

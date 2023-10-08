@@ -22,11 +22,11 @@ protected:
         // current direction vector not relevant for proximity tests
     std::vector<double> dummyDirection = std::vector<double> {1.0, 1.0};
 
-        Boid  boid1  = Boid(Vector2D(1, 2), Vector2D(1, 1));
+    Boid  boid1  = Boid(Vector3D(1, 2, 0), Vector3D(1, 1, 0));
 
-        Boid  boid2  = Boid(Vector2D(1, 2), Vector2D(1, 1));
+    Boid  boid2  = Boid(Vector3D(1, 2, 0), Vector3D(1, 1, 0));
 
-        Boid  boid3  = Boid(Vector2D(5, 4), Vector2D(1, 1));
+    Boid  boid3  = Boid(Vector3D(5, 4, 0), Vector3D(1, 1, 0));
 
         flock.boids.push_back(boid1);
         flock.boids.push_back(boid2);

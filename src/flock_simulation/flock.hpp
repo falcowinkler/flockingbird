@@ -53,10 +53,9 @@ public:
                 return boids[idx].position.x;
             else if (dim == 1)
                 return boids[idx].position.y;
-                else{
-                        return boids[idx].position.y;
-                }
-         
+            else{
+                return boids[idx].position.y;
+            }
         } else {
             if (dim == 0)
                 return boids[idx].position.x;
