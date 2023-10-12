@@ -1,5 +1,5 @@
 #pragma once
-#import "utility/vector_operations.hpp"
+#import "../utility/vector_operations.hpp"
 
 namespace flockingbird {
 struct FlockSimulationParameters {

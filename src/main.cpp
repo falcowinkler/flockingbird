@@ -12,8 +12,8 @@ using namespace flockingbird;
 
 static void do_drawing(cairo_t*, GtkWidget*);
 
-const int SCREEN_WIDTH            = 1024;
-const int SCREEN_HEIGHT           = 600;
+const int SCREEN_WIDTH            = 1500;
+const int SCREEN_HEIGHT           = 1000;
 const int REFRESH_INTERVAL_REDRAW = 1000.0 / 30.0;
 
 double speedLimit                     = 5;
@@ -25,7 +25,7 @@ double separationWeight               = 1.5;
 double alignmentWeight                = 1.0;
 double cohesionWeight                 = 1.0;
 double avoidanceWeight                = 1.0;
-double dirWeight                      = 1.0;
+double dirWeight                      = 2.0;
 bool twoDimensions = true;
 int    numberOfBoids                  = 100;
 
@@ -40,10 +40,10 @@ static FlockSimulationParameters flockSimulationParameters(speedLimit,
                                                            avoidanceWeight,
                                                            dirWeight,
                                                            twoDimensions,
-                                                           1024,
-                                                           1024,
-                                                           1024,
-                                                           Vector3D(0, 0, 0)
+                                                           SCREEN_WIDTH,
+                                                           SCREEN_HEIGHT,
+                                                           -1,
+                                                           Vector3D(round(SCREEN_WIDTH / 2), round(SCREEN_HEIGHT / 2), 0)
                                                            );
 static Flock                     flock(numberOfBoids, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
 static FlockSimulation           flockSimulation(flockSimulationParameters, flock, defaultRules);
